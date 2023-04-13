@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine
+FROM golang:1.20.3-alpine
 
 ENV GOOS="linux"
 ENV CGO_ENABLED=0
