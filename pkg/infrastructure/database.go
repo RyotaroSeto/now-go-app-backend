@@ -2,9 +2,11 @@ package infrastructure
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"log"
+	"now-go-kon/pkg/util"
 
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -18,13 +20,24 @@ type DB struct {
 
 var d *DB
 
-// アプリケーション起動時に呼ばれる関数
-func RDBConnect(dsn string) error {
-	var db *gorm.DB = nil // TODO:アクセス作成する
-	// var db *gorm.DB = createDB() // TODO:アクセス作成する
-
+func RDBConnect(config util.Config) error {
+	db, err := createDB(config)
+	if err != nil {
+		return err
+	}
 	d = &DB{db}
 	return nil
+}
+
+func createDB(config util.Config) (*gorm.DB, error) {
+	dsn := "host=" + config.DBHost + " user=" + config.DBUser + " password=" + config.DBPassword + " dbname=" + config.DBName + " port=" + config.DBPort + " sslmode=disable TimeZone=Asia/Tokyo"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal("cannot connect to db", err)
+		return nil, err
+	}
+
+	return db, nil
 }
 
 func GetDB() *DB {
@@ -36,7 +49,7 @@ func (d *DB) Transaction(ctx context.Context, fn func(ctx context.Context) error
 	defer func(tx *gorm.DB) {
 		if r := recover(); r != nil {
 			tx.Rollback()
-			err = errors.New(fmt.Sprintf("recovered from panic, err: %s", r))
+			err = fmt.Errorf("recovered from panic, err: %s", r)
 		}
 	}(tx)
 
