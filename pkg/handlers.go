@@ -26,18 +26,18 @@ func RegisterHandlers(e *gin.Engine) {
 
 	{
 		RegisterAuthenticationHandlers(root)
-		// RegisterContractHandlers(root)
+		RegisterUserHandlers(root)
 	}
 }
 
-// func RegisterUserHandlers(root *gin.RouterGroup) {
-// 	user := userInjection.InitializeUser()
+func RegisterUserHandlers(root *gin.RouterGroup) {
+	user := injection.InitializeUserController()
 
-// 	users := root.Group("/users")
-// 	{
-// 		users.GET("/profile", user.GetProfileHandler) //ユーザー情報参照API。GET /api/v1/users/profile
-// 	}
-// }
+	users := root.Group("/users")
+	{
+		users.GET("/profile", user.GetProfileHandler) //ユーザー情報参照API。GET /api/v1/users/profile
+	}
+}
 
 func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
 	auth := injection.InitializeAuthController()

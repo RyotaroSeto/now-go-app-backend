@@ -27,3 +27,11 @@ func InitializeAuthController() *userinterface.AuthController {
 	authController := userinterface.NewAuthController(authService)
 	return authController
 }
+
+func InitializeUserController() *userinterface.UserController {
+	userRepository := infrastructure.NewUserRepository()
+	db := infrastructure.GetDB()
+	userService := application.NewUserService(userRepository, db)
+	userController := userinterface.NewUserController(userService)
+	return userController
+}
