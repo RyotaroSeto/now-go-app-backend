@@ -21,7 +21,9 @@ RUN go install github.com/go-delve/delve/cmd/dlv@v1.7.3 && \
   go install github.com/alvaroloes/enumer@latest && \
   go install github.com/haya14busa/goplay/cmd/goplay@latest
 
-COPY ./ ./
+COPY ./src ./
+
+WORKDIR ${ROOT}
 
 RUN go mod download
 
