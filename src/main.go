@@ -12,7 +12,10 @@ func errorResponse(err error) gin.H {
 }
 
 func main() {
+	setupRDB()
 	r := gin.Default()
+
+	RegisterHandlers(r)
 
 	r.GET("/test", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"response": "test"})
@@ -21,4 +24,16 @@ func main() {
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func setupRDB() {
+	// authDSN := "認証コンテキスト用DBへの接続情報"
+	// if err := authdb.RDBConnect(authDSN); err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// userDSN := "ユーザー管理コンテキスト用DBへの接続情報"
+	// if err := userdb.RDBConnect(userDSN); err != nil {
+	// 	log.Fatal(err)
+	// }
 }
