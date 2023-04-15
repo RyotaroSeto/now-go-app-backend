@@ -1,8 +1,8 @@
 package infrastructure
 
 import (
-	"authentication/domain"
 	"context"
+	"now-go-kon/pkg/domain"
 
 	"gorm.io/gorm"
 )

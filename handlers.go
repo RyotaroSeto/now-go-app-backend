@@ -3,8 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	authInjection "authentication/injection"
-	// userInjection "user/injection"
+	"now-go-kon/pkg/injection"
 )
 
 func RegisterHandlers(e *gin.Engine) {
@@ -26,7 +25,7 @@ func RegisterHandlers(e *gin.Engine) {
 // }
 
 func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
-	auth := authInjection.InitializeAuthController()
+	auth := injection.InitializeAuthController()
 
 	session := root.Group("/session")
 	{

@@ -7,9 +7,15 @@
 package injection
 
 import (
-	"authentication/application"
-	"authentication/infrastructure"
-	"authentication/userinterface"
+	"now-go-kon/pkg/application"
+	"now-go-kon/pkg/infrastructure"
+	"now-go-kon/pkg/userinterface"
+)
+
+import (
+	_ "github.com/google/subcommands"
+	_ "golang.org/x/mod/module"
+	_ "golang.org/x/tools/go/types/typeutil"
 )
 
 // Injectors from wire.go:

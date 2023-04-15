@@ -10,12 +10,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./src/db:/docker-entrypoint-initdb.d
+      - ./db:/docker-entrypoint-initdb.d
   nowapi:
     container_name: api
     build:
       context: .
-      dockerfile: ./src/Dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - "8080:8080"
     depends_on:

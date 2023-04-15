@@ -1,9 +1,9 @@
 package userinterface
 
 import (
-	"authentication/application"
-	"authentication/domain"
 	"net/http"
+	"now-go-kon/pkg/application"
+	"now-go-kon/pkg/domain"
 
 	"github.com/gin-gonic/gin"
 )

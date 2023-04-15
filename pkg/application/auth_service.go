@@ -1,8 +1,8 @@
 package application
 
 import (
-	"authentication/domain"
 	"context"
+	"now-go-kon/pkg/domain"
 )
 
 type authService struct {
