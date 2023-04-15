@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,9 +12,7 @@ func main() {
 
 	RegisterHandlers(r)
 
-	r.GET("/test", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"response": "test"})
-	})
+	r.GET("/healthCheck", HealthCheckHandler)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal(err)

@@ -1,10 +1,25 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"now-go-kon/pkg/injection"
 )
+
+type Health struct {
+	Status int    `json:"status"`
+	Result string `json:"result"`
+}
+
+func HealthCheckHandler(c *gin.Context) {
+	health := Health{
+		Status: http.StatusOK,
+		Result: "success",
+	}
+	c.JSON(200, health)
+}
 
 func RegisterHandlers(e *gin.Engine) {
 	root := e.Group("/api/v1")

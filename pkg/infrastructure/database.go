@@ -20,7 +20,8 @@ var d *DB
 
 // アプリケーション起動時に呼ばれる関数
 func RDBConnect(dsn string) error {
-	var db *gorm.DB = createDB() // TODO:アクセス作成する
+	var db *gorm.DB = nil // TODO:アクセス作成する
+	// var db *gorm.DB = createDB() // TODO:アクセス作成する
 
 	d = &DB{db}
 	return nil
