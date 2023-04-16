@@ -1,13 +1,13 @@
--- user table
-CREATE TABLE user (
+CREATE TABLE users (
     id INT PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
 );
 
--- user_detail table
-CREATE TABLE user_detail (
+DROP TABLE users;
+
+CREATE TABLE users_detail (
     id INT PRIMARY KEY,
     user_id INT,
     date_of_birth DATE NOT NULL,
@@ -17,38 +17,42 @@ CREATE TABLE user_detail (
     education VARCHAR(255) NOT NULL,
     height INT,
     weight INT,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- like table
-CREATE TABLE LIKE (
+DROP TABLE users_detail;
+
+CREATE TABLE likes (
     user_id INT,
     liked_user_id INT,
     liked_date DATE,
     PRIMARY KEY (user_id, liked_user_id),
-    FOREIGN KEY (user_id) REFERENCES USER(id),
-    FOREIGN KEY (liked_user_id) REFERENCES USER(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (liked_user_id) REFERENCES users(id)
 );
 
+DROP TABLE likes;
 
--- match table
 CREATE TABLE match (
     user_id INT,
     matched_user_id INT,
     matched_date DATE,
     PRIMARY KEY (user_id, matched_user_id),
-    FOREIGN KEY (user_id) REFERENCES USER(id),
-    FOREIGN KEY (matched_user_id) REFERENCES USER(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (matched_user_id) REFERENCES users(id)
 );
 
 
--- message table
+DROP TABLE match;
+
 CREATE TABLE message (
     id INT PRIMARY KEY,
     sender_user_id INT,
     receiver_user_id INT,
     message_body VARCHAR(255),
     sent_date DATE,
-    FOREIGN KEY (sender_user_id) REFERENCES user(id),
-    FOREIGN KEY (receiver_user_id) REFERENCES user(id)
+    FOREIGN KEY (sender_user_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_user_id) REFERENCES users(id)
 );
+
+DROP TABLE message;

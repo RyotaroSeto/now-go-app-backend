@@ -27,6 +27,5 @@ func (u *UserRepository) conn(ctx context.Context) *gorm.DB {
 }
 
 func (u *UserRepository) GetProfile(ctx context.Context, uID domain.UserID) error {
-	// パスワード認証の処理は割愛
 	return nil
 }

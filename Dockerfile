@@ -19,7 +19,8 @@ RUN go install github.com/go-delve/delve/cmd/dlv@v1.7.3 && \
   go install honnef.co/go/tools/cmd/staticcheck@latest && \
   go install golang.org/x/tools/cmd/goimports@v0.1.10 && \
   go install github.com/alvaroloes/enumer@latest && \
-  go install github.com/haya14busa/goplay/cmd/goplay@latest
+  go install github.com/haya14busa/goplay/cmd/goplay@latest && \
+  go install github.com/pressly/goose/v3/cmd/goose@latest
 
 COPY ./ ./
 
