@@ -20,6 +20,22 @@ type UserRequest struct {
 	ID int `json:"id"`
 }
 
+type userResponse struct {
+	ID       int    `json:"id"`
+	Username string `json:"user_name"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+}
+
+func newUserResponse(u *domain.User) userResponse {
+	return userResponse{
+		ID:       u.ID.Num(),
+		Username: u.UserName.String(),
+		Password: u.Password.String(),
+		Email:    u.Email.String(),
+	}
+}
+
 func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 	var req UserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -27,9 +43,11 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 		return
 	}
 
-	if err := c.service.User(ctx, domain.UserID(req.ID)); err != nil {
+	user, err := c.service.User(ctx, domain.UserID(req.ID))
+	if err != nil {
 		ctx.Status(http.StatusBadRequest)
 		return
 	}
-	ctx.Status(http.StatusOK)
+	rsp := newUserResponse(user)
+	ctx.JSON(http.StatusOK, rsp)
 }

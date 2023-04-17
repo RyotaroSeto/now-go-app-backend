@@ -22,12 +22,20 @@ func (u UserID) Num() int {
 	return int(u)
 }
 
-// func (u *User) ReloadUserID() {
-// 	u.ID = NewUserID()
-// }
-
 type UserName string
+
+func (u UserName) String() string {
+	return string(u)
+}
 
 type Password string
 
+func (p Password) String() string {
+	return string(p)
+}
+
 type Email string
+
+func (e Email) String() string {
+	return string(e)
+}

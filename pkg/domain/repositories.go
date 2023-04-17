@@ -7,5 +7,5 @@ type AuthRepository interface {
 }
 
 type UserRepository interface {
-	GetProfile(context.Context, UserID) error
+	GetProfile(context.Context, UserID) (*User, error)
 }
