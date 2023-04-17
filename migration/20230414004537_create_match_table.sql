@@ -14,7 +14,6 @@ CREATE TABLE users_detail (
     gender VARCHAR(255) NOT NULL,
     residence VARCHAR(255) NOT NULL,
     occupation VARCHAR(255) NOT NULL,
-    education VARCHAR(255) NOT NULL,
     height INT,
     weight INT,
     FOREIGN KEY (user_id) REFERENCES users(id)
