@@ -17,7 +17,7 @@ func NewUserController(service application.UserService) *UserController {
 }
 
 type UserRequest struct {
-	ID string `json:"id"`
+	ID int `json:"id"`
 }
 
 func (c *UserController) GetProfileHandler(ctx *gin.Context) {
@@ -28,7 +28,7 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 	}
 
 	if err := c.service.User(ctx, domain.UserID(req.ID)); err != nil {
-		ctx.Status(http.StatusUnauthorized)
+		ctx.Status(http.StatusBadRequest)
 		return
 	}
 	ctx.Status(http.StatusOK)

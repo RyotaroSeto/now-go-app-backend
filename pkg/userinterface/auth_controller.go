@@ -17,7 +17,7 @@ func NewAuthController(service application.AuthService) *AuthController {
 }
 
 type AuthRequest struct {
-	ID       string `json:"id"`
+	ID       int    `json:"id"`
 	Password string `json:"password"`
 }
 
