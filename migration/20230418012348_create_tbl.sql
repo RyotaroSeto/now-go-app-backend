@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS users_detail (
+CREATE TABLE IF NOT EXISTS users_details (
     id INT PRIMARY KEY,
     user_id INT,
     date_of_birth TIMESTAMP NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS users_detail (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE INDEX ON users_detail (user_id);
+CREATE INDEX ON users_details (user_id);
 
 CREATE TABLE IF NOT EXISTS likes (
     user_id INT,
@@ -68,7 +68,7 @@ CREATE INDEX ON message (receiver_user_id);
 
 DROP TABLE users;
 
-DROP TABLE users_detail;
+DROP TABLE users_details;
 
 DROP TABLE likes;
 

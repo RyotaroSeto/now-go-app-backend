@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"now-go-kon/pkg/domain"
 
@@ -10,11 +11,11 @@ import (
 )
 
 type Users struct {
-	ID       int    `gorm:"column:id;primaryKey,omitempty"`
-	UserName string `gorm:"column:user_name"`
-	Password string `gorm:"column:password"`
-	Email    string `gorm:"column:email"`
-	// UserDetail UserDetail
+	ID           int          `gorm:"column:id;primaryKey,omitempty"`
+	UserName     string       `gorm:"column:user_name"`
+	Password     string       `gorm:"column:password"`
+	Email        string       `gorm:"column:email"`
+	UsersDetails UsersDetails `gorm:"foreignKey:ID;references:UserID"`
 }
 
 func (u *Users) toEntity() *domain.User {
@@ -58,17 +59,16 @@ func (u *UserRepository) conn(ctx context.Context) *gorm.DB {
 func (u *UserRepository) GetProfile(ctx context.Context, uID domain.UserID) (*domain.User, error) {
 	us := Users{}
 	q := Users{ID: uID.Num()}
-	res := u.conn(ctx).Where(&q).First(&us)
+	res := u.conn(ctx).Preload("UsersDetails").Where(&q).First(&us)
 	if err := res.Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			log.Println(err)
-			return nil, err
-			// msg := fmt.Sprintf("HkdbLicenseID: %s is not found", keyID)
-			// return nil, myerrors.NewError(mmsg
+			msg := fmt.Sprintf("UserID: %d is not found", uID.Num())
+			return nil, errors.New(msg)
+
 		}
-		log.Println(err)
 		return nil, err
 	}
 
+	log.Println(us)
 	return us.toEntity(), nil
 }
