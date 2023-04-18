@@ -1,7 +1,6 @@
 package userinterface
 
 import (
-	"log"
 	"net/http"
 	"now-go-kon/pkg/application"
 	"now-go-kon/pkg/domain"
@@ -28,7 +27,7 @@ func (r *UserRequest) toParams() domain.UserID {
 type UserResponse struct {
 	ID       int    `json:"id"`
 	Username string `json:"user_name"`
-	Password string `json:"password"`
+	Status   int    `json:"status"`
 	Email    string `json:"email"`
 }
 
@@ -36,7 +35,7 @@ func UserProfileResponse(u *domain.User) UserResponse {
 	return UserResponse{
 		ID:       u.ID.Num(),
 		Username: u.UserName.String(),
-		Password: u.Password.String(),
+		Status:   u.Status.Num(),
 		Email:    u.Email.String(),
 	}
 }
@@ -51,7 +50,6 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 	id := req.toParams()
 	user, err := c.service.User(ctx, id)
 	if err != nil {
-		log.Println(err)
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}

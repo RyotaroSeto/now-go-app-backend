@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"now-go-kon/pkg/domain"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -13,17 +13,20 @@ import (
 type Users struct {
 	ID           int          `gorm:"column:id;primaryKey,omitempty"`
 	UserName     string       `gorm:"column:user_name"`
-	Password     string       `gorm:"column:password"`
+	Status       int          `gorm:"column:status"`
 	Email        string       `gorm:"column:email"`
+	CreatedDate  time.Time    `gorm:"column:created_date;autoCreateTime"`
+	UpdatedDate  time.Time    `gorm:"column:updated_date;autoUpdateTime"`
 	UsersDetails UsersDetails `gorm:"foreignKey:ID;references:UserID"`
 }
 
 func (u *Users) toEntity() *domain.User {
 	users := &domain.User{
-		ID:       domain.UserID(u.ID),
-		UserName: domain.UserName(u.UserName),
-		Password: domain.Password(u.Password),
-		Email:    domain.Email(u.Email),
+		ID:           domain.UserID(u.ID),
+		UserName:     domain.UserName(u.UserName),
+		Status:       domain.Status(u.Status),
+		Email:        domain.Email(u.Email),
+		UsersDetails: *u.UsersDetails.toEntity(),
 	}
 
 	return users
@@ -33,8 +36,16 @@ func (us *Users) bindEntity(e *domain.User) {
 	u := us.toEntity()
 	e.ID = u.ID
 	e.UserName = u.UserName
-	e.Password = u.Password
+	e.Status = u.Status
 	e.Email = u.Email
+	e.UsersDetails = u.UsersDetails
+}
+
+func (u *Users) fromEntity(e *domain.User) {
+	u.ID = e.ID.Num()
+	u.UserName = e.UserName.String()
+	u.Status = e.Status.Num()
+	u.Email = e.Email.String()
 }
 
 type UserRepository struct {
@@ -69,6 +80,5 @@ func (u *UserRepository) GetProfile(ctx context.Context, uID domain.UserID) (*do
 		return nil, err
 	}
 
-	log.Println(us)
 	return us.toEntity(), nil
 }
