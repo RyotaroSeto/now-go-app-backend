@@ -20,15 +20,19 @@ type UserRequest struct {
 	ID int `json:"id"`
 }
 
-type userResponse struct {
+func (r *UserRequest) toParams() domain.UserID {
+	return domain.UserID((r.ID))
+}
+
+type UserResponse struct {
 	ID       int    `json:"id"`
 	Username string `json:"user_name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
 }
 
-func newUserResponse(u *domain.User) userResponse {
-	return userResponse{
+func UserProfileResponse(u *domain.User) UserResponse {
+	return UserResponse{
 		ID:       u.ID.Num(),
 		Username: u.UserName.String(),
 		Password: u.Password.String(),
@@ -43,11 +47,13 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 		return
 	}
 
-	user, err := c.service.User(ctx, domain.UserID(req.ID))
+	id := req.toParams()
+	user, err := c.service.User(ctx, id)
 	if err != nil {
 		ctx.Status(http.StatusBadRequest)
 		return
 	}
-	rsp := newUserResponse(user)
-	ctx.JSON(http.StatusOK, rsp)
+
+	res := UserProfileResponse(user)
+	ctx.JSON(http.StatusOK, res)
 }
