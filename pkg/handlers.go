@@ -35,7 +35,8 @@ func RegisterUserHandlers(root *gin.RouterGroup) {
 
 	users := root.Group("/users")
 	{
-		users.POST("/profile", user.GetProfileHandler) //ユーザー情報参照API。GET /api/v1/users/profile
+		users.POST("/profile", user.GetProfileHandler)
+		users.PUT("/update", user.UpdateProfileHandler)
 	}
 }
 

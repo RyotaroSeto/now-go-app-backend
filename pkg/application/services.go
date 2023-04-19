@@ -11,4 +11,5 @@ type AuthService interface {
 
 type UserService interface {
 	User(context.Context, domain.UserID) (*domain.User, error)
+	UserUpdate(context.Context, domain.UsersDetails) (*domain.UsersDetails, error)
 }

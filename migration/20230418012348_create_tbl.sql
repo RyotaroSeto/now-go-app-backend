@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS users_details (
     id INT PRIMARY KEY,
     user_id INT,
-    date_of_birth TIMESTAMP NOT NULL,
+    date_of_birth INT NOT NULL,
     gender VARCHAR(255) NOT NULL,
     residence VARCHAR(255) NOT NULL,
     occupation VARCHAR(255) NOT NULL,

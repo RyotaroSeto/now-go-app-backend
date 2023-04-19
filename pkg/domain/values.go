@@ -44,16 +44,58 @@ func (e Email) String() string {
 }
 
 type UsersDetails struct {
-	ID          int
-	UserID      int
-	DateOfBirth time.Time
-	Gender      string
-	Residence   string
-	Occupation  string
-	Height      int
-	Weight      int
+	ID          UserDetailID
+	UserID      UserID
+	DateOfBirth DateOfBirth
+	Gender      Gender
+	Residence   Residence
+	Occupation  Occupation
+	Height      Height
+	Weight      Weight
 	CreatedDate time.Time
 	UpdatedDate time.Time
+}
+
+type UserDetailID int
+
+func (u UserDetailID) Num() int {
+	return int(u)
+}
+
+type DateOfBirth int
+
+func (d DateOfBirth) Num() int {
+	return int(d)
+}
+
+type Gender string
+
+func (g Gender) String() string {
+	return string(g)
+}
+
+type Residence string
+
+func (r Residence) String() string {
+	return string(r)
+}
+
+type Occupation string
+
+func (o Occupation) String() string {
+	return string(o)
+}
+
+type Height int
+
+func (h Height) Num() int {
+	return int(h)
+}
+
+type Weight int
+
+func (w Weight) Num() int {
+	return int(w)
 }
 
 type Password string
