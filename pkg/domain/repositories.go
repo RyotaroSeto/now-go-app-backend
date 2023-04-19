@@ -8,5 +8,5 @@ type AuthRepository interface {
 
 type UserRepository interface {
 	GetProfile(context.Context, UserID) (*User, error)
-	UpdateProfile(context.Context, UsersDetails) (*UsersDetails, error)
+	UpdateProfile(context.Context, *UsersDetails) (*UsersDetails, error)
 }

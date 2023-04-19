@@ -2,12 +2,13 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
+	"log"
 	"now-go-kon/pkg/domain"
 	"time"
 )
 
 type UsersDetails struct {
-	ID          int       `gorm:"column:id;primaryKey,omitempty"`
 	UserID      int       `gorm:"column:user_id"`
 	DateOfBirth int       `gorm:"column:date_of_birth"`
 	Gender      string    `gorm:"column:gender"`
@@ -21,7 +22,6 @@ type UsersDetails struct {
 
 func (u *UsersDetails) toEntity() *domain.UsersDetails {
 	userDetai := &domain.UsersDetails{
-		ID:          domain.UserDetailID(u.ID),
 		UserID:      domain.UserID(u.UserID),
 		DateOfBirth: domain.DateOfBirth(u.DateOfBirth),
 		Gender:      domain.Gender(u.Gender),
@@ -34,19 +34,36 @@ func (u *UsersDetails) toEntity() *domain.UsersDetails {
 	return userDetai
 }
 
-func (u *UserRepository) UpdateProfile(ctx context.Context, uParam domain.UsersDetails) (*domain.UsersDetails, error) {
-	// us := Users{}
-	// q := Users{ID: uID.Num()}
-	// res := u.conn(ctx).Preload("UsersDetails").Where(&q).First(&us)
-	// if err := res.Error; err != nil {
-	// 	if errors.Is(err, gorm.ErrRecordNotFound) {
-	// 		msg := fmt.Sprintf("UserID: %d is not found", uID.Num())
-	// 		return nil, errors.New(msg)
+func (us *UsersDetails) bindEntity(e *domain.UsersDetails) {
+	u := us.toEntity()
+	e.UserID = u.UserID
+	e.DateOfBirth = u.DateOfBirth
+	e.Gender = u.Gender
+	e.Residence = u.Residence
+	e.Occupation = u.Occupation
+	e.Height = u.Height
+	e.Weight = u.Weight
+}
 
-	// 	}
-	// 	return nil, err
-	// }
+func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
+	u.UserID = e.UserID.Num()
+	u.DateOfBirth = e.DateOfBirth.Num()
+	u.Gender = e.Gender.String()
+	u.Residence = e.Residence.String()
+	u.Occupation = e.Occupation.String()
+	u.Height = e.Height.Num()
+	u.Weight = e.Weight.Num()
+}
 
-	return nil, nil
-	// return us.toEntity(), nil
+func (u *UserRepository) UpdateProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
+	var ud UsersDetails
+	ud.fromEntity(uParam)
+
+	q := UsersDetails{UserID: uParam.UserID.Num()}
+	if err := u.conn(ctx).Where(&q).Save(&ud).Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+
+	return ud.toEntity(), nil
 }

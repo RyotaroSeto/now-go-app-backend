@@ -102,8 +102,8 @@ func UserUpdateResponse(u *domain.UsersDetails) UserDetailResponse {
 	}
 }
 
-func (r *UserUpdateRequest) toParams() domain.UsersDetails {
-	return domain.UsersDetails{
+func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
+	return &domain.UsersDetails{
 		UserID:      domain.UserID(r.ID),
 		DateOfBirth: domain.DateOfBirth(r.DateOfBirth),
 		Gender:      domain.Gender(r.Gender),

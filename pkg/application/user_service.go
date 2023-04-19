@@ -37,7 +37,7 @@ func (s *userService) User(ctx context.Context, uID domain.UserID) (user *domain
 	return user, err
 }
 
-func (s *userService) UserUpdate(ctx context.Context, uParam domain.UsersDetails) (user *domain.UsersDetails, err error) {
+func (s *userService) UserUpdate(ctx context.Context, uParam *domain.UsersDetails) (user *domain.UsersDetails, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
 		ud, err := s.repo.UpdateProfile(ctx, uParam)
 		if err != nil {
