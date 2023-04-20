@@ -55,3 +55,28 @@ func (c *BoardController) CreateBoardHandler(ctx *gin.Context) {
 	res := BoardCreateResponse(board)
 	ctx.JSON(http.StatusOK, res)
 }
+
+type BoardDeleteRequest struct {
+	ID int `json:"id"`
+}
+
+func (r *BoardDeleteRequest) toParams() domain.BoardID {
+	return domain.BoardID(r.ID)
+}
+
+func (c *BoardController) DeleteBoardHandler(ctx *gin.Context) {
+	var req BoardDeleteRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	bID := req.toParams()
+	_, err := c.service.BoardDelete(ctx, bID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}

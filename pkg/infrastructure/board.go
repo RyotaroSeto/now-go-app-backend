@@ -68,3 +68,13 @@ func (u *BoardRepository) CreateBoard(ctx context.Context, uParam *domain.Board)
 
 	return b.toEntity(), nil
 }
+
+func (u *BoardRepository) DeleteBoard(ctx context.Context, bID domain.BoardID) (*domain.Board, error) {
+	var b Board
+	if err := u.conn(ctx).Where(&Board{ID: bID.Num()}).Delete(&b).Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+
+	return b.toEntity(), nil
+}

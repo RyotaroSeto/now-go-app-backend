@@ -36,3 +36,20 @@ func (s *boardService) Board(ctx context.Context, uParam *domain.Board) (board *
 
 	return board, err
 }
+
+func (s *boardService) BoardDelete(ctx context.Context, bID domain.BoardID) (board *domain.Board, err error) {
+	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		b, err := s.repo.DeleteBoard(ctx, bID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		board = b
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return board, err
+}
