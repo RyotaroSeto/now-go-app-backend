@@ -1,6 +1,8 @@
 package pkg
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -49,4 +51,17 @@ func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
 		session.POST("/", auth.PasswordAuthHandler) //パスワード認証API。POST /api/v1/session/
 		// session.DELETE("/", auth.LogoutHandler)     //ログアウトAPI。DELETE /api/v1/session/
 	}
+}
+
+func RegisterNotFoundHandler(router *gin.Engine) {
+	router.NoRoute(func(c *gin.Context) {
+		c.Status(http.StatusNotFound)
+		err := fmt.Errorf(
+			"<method: %s, url: %s, params: %+v> is not found in routes",
+			c.Request.Method,
+			c.Request.URL.Path,
+			c.Request.URL.Query(),
+		)
+		log.Println(err)
+	})
 }

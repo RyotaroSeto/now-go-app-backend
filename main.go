@@ -23,6 +23,7 @@ func main() {
 
 	r.GET("/healthCheck", pkg.HealthCheckHandler)
 
+	pkg.RegisterNotFoundHandler(r)
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
