@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS message (
 CREATE INDEX ON message (sender_user_id);
 CREATE INDEX ON message (receiver_user_id);
 
-CREATE TABLE IF NOT EXISTS go_post (
+CREATE TABLE IF NOT EXISTS boards (
     id SERIAL PRIMARY KEY,
     user_id INT,
     -- 目的
@@ -75,7 +75,8 @@ CREATE TABLE IF NOT EXISTS go_post (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE INDEX ON go_post (user_id);
+CREATE INDEX ON boards (user_id);
+
 
 -- +goose Down
 

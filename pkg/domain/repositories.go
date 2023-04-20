@@ -12,5 +12,5 @@ type UserRepository interface {
 }
 
 type BoardRepository interface {
-	CreateBoard(context.Context, UserID) (*Board, error)
+	CreateBoard(context.Context, *Board) (*Board, error)
 }

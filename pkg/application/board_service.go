@@ -20,9 +20,9 @@ func NewBoardService(repo domain.BoardRepository, tx Transaction) BoardService {
 
 var _ BoardService = new(boardService)
 
-func (s *boardService) Board(ctx context.Context, uID domain.UserID) (board *domain.Board, err error) {
+func (s *boardService) Board(ctx context.Context, uParam *domain.Board) (board *domain.Board, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
-		b, err := s.repo.CreateBoard(ctx, uID)
+		b, err := s.repo.CreateBoard(ctx, uParam)
 		if err != nil {
 			log.Println(err)
 			return err

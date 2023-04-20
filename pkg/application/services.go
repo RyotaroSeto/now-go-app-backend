@@ -15,5 +15,5 @@ type UserService interface {
 }
 
 type BoardService interface {
-	Board(context.Context, domain.UserID) (*domain.Board, error)
+	Board(context.Context, *domain.Board) (*domain.Board, error)
 }

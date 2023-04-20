@@ -113,6 +113,7 @@ func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 		Weight:      domain.Weight(r.Weight),
 	}
 }
+
 func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	var req UserUpdateRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {

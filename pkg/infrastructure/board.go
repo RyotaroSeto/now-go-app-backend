@@ -2,6 +2,8 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
+	"log"
 	"now-go-kon/pkg/domain"
 	"time"
 
@@ -16,33 +18,25 @@ type Board struct {
 	UpdatedDate time.Time `gorm:"column:updated_date;autoUpdateTime"`
 }
 
-// func (u *Users) toEntity() *domain.User {
-// 	users := &domain.User{
-// 		ID:           domain.UserID(u.ID),
-// 		UserName:     domain.UserName(u.UserName),
-// 		Status:       domain.Status(u.Status),
-// 		Email:        domain.Email(u.Email),
-// 		UsersDetails: *u.UsersDetails.toEntity(),
-// 	}
+func (u *Board) toEntity() *domain.Board {
+	board := &domain.Board{
+		UserID: domain.UserID(u.UserID),
+		Body:   domain.Body(u.Body),
+	}
 
-// 	return users
-// }
+	return board
+}
 
-// func (us *Users) bindEntity(e *domain.User) {
-// 	u := us.toEntity()
-// 	e.ID = u.ID
-// 	e.UserName = u.UserName
-// 	e.Status = u.Status
-// 	e.Email = u.Email
-// 	e.UsersDetails = u.UsersDetails
-// }
+func (us *Board) bindEntity(e *domain.Board) {
+	u := us.toEntity()
+	e.UserID = u.UserID
+	e.Body = u.Body
+}
 
-// func (u *Users) fromEntity(e *domain.User) {
-// 	u.ID = e.ID.Num()
-// 	u.UserName = e.UserName.String()
-// 	u.Status = e.Status.Num()
-// 	u.Email = e.Email.String()
-// }
+func (u *Board) fromEntity(e *domain.Board) {
+	u.UserID = e.UserID.Num()
+	u.Body = e.Body.String()
+}
 
 type BoardRepository struct {
 	db *DB
@@ -63,18 +57,14 @@ func (u *BoardRepository) conn(ctx context.Context) *gorm.DB {
 	return u.db.Session(&gorm.Session{})
 }
 
-func (u *BoardRepository) CreateBoard(ctx context.Context, uID domain.UserID) (*domain.Board, error) {
-	// us := Users{}
-	// q := Users{ID: uID.Num()}
-	// res := u.conn(ctx).Preload("UsersDetails").Where(&q).First(&us)
-	// if err := res.Error; err != nil {
-	// 	if errors.Is(err, gorm.ErrRecordNotFound) {
-	// 		msg := fmt.Sprintf("UserID: %d is not found", uID.Num())
-	// 		return nil, errors.New(msg)
+func (u *BoardRepository) CreateBoard(ctx context.Context, uParam *domain.Board) (*domain.Board, error) {
+	var b Board
+	b.fromEntity(uParam)
 
-	// 	}
-	// 	return nil, err
-	// }
+	if err := u.conn(ctx).Create(&b).Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
 
-	return nil, nil
+	return b.toEntity(), nil
 }
