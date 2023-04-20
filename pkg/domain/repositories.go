@@ -10,3 +10,7 @@ type UserRepository interface {
 	GetProfile(context.Context, UserID) (*User, error)
 	UpdateProfile(context.Context, *UsersDetails) (*UsersDetails, error)
 }
+
+type BoardRepository interface {
+	CreateBoard(context.Context, UserID) (*Board, error)
+}

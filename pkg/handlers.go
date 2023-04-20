@@ -29,6 +29,7 @@ func RegisterHandlers(e *gin.Engine) {
 	{
 		RegisterAuthenticationHandlers(root)
 		RegisterUserHandlers(root)
+		RegisterBoardHandlers(root)
 	}
 }
 
@@ -50,6 +51,15 @@ func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
 		// session.GET("/", auth.GetSessionHandler)    //セッション確認API。GET /api/v1/session/
 		session.POST("/", auth.PasswordAuthHandler) //パスワード認証API。POST /api/v1/session/
 		// session.DELETE("/", auth.LogoutHandler)     //ログアウトAPI。DELETE /api/v1/session/
+	}
+}
+
+func RegisterBoardHandlers(root *gin.RouterGroup) {
+	board := injection.InitializeBoardController()
+
+	session := root.Group("/board")
+	{
+		session.POST("/", board.CreateBoardHandler)
 	}
 }
 

@@ -35,3 +35,11 @@ func InitializeUserController() *userinterface.UserController {
 	userController := userinterface.NewUserController(userService)
 	return userController
 }
+
+func InitializeBoardController() *userinterface.BoardController {
+	boardRepository := infrastructure.NewBoardRepository()
+	db := infrastructure.GetDB()
+	boardService := application.NewBoardService(boardRepository, db)
+	boardController := userinterface.NewBoardController(boardService)
+	return boardController
+}

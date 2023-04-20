@@ -13,3 +13,7 @@ type UserService interface {
 	User(context.Context, domain.UserID) (*domain.User, error)
 	UserUpdate(context.Context, *domain.UsersDetails) (*domain.UsersDetails, error)
 }
+
+type BoardService interface {
+	Board(context.Context, domain.UserID) (*domain.Board, error)
+}

@@ -40,3 +40,22 @@ func InitializeUserController() *userinterface.UserController {
 
 	return nil
 }
+
+func InitializeBoardController() *userinterface.BoardController {
+	wire.Build(
+		infrastructure.GetDB,
+		wire.Bind(
+			new(application.Transaction),
+			new(*infrastructure.DB),
+		),
+		infrastructure.NewBoardRepository,
+		wire.Bind(
+			new(domain.BoardRepository),
+			new(*infrastructure.BoardRepository),
+		),
+		application.NewBoardService,
+		userinterface.NewBoardController,
+	)
+
+	return nil
+}
