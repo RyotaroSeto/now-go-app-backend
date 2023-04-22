@@ -70,10 +70,10 @@ func (u *BoardRepository) GetBoard(ctx context.Context, gender domain.Gender) ([
 		return nil, errors.New(err.Error())
 	}
 	log.Println(b)
-	// 	mls := myrakus.MyRakusLicenses{}
-	// 	for _, a := range ml {
-	// 		mls = append(mls, *a.toEntity())
-	// 	}
+	// bs := domain.Board{}
+	// for _, a := range b {
+	// 	bs = append(bs, *a.toEntity())
+	// }
 	// 	return mls, nil
 	return nil, nil
 }
@@ -90,12 +90,12 @@ func (u *BoardRepository) CreateBoard(ctx context.Context, uParam *domain.Board)
 	return b.toEntity(), nil
 }
 
-func (u *BoardRepository) DeleteBoard(ctx context.Context, bID domain.BoardID) (*domain.Board, error) {
+func (u *BoardRepository) DeleteBoard(ctx context.Context, bID domain.BoardID) error {
 	var b Board
 	if err := u.conn(ctx).Where(&Board{ID: bID.Num()}).Delete(&b).Error; err != nil {
 		log.Println(err)
-		return nil, errors.New(err.Error())
+		return errors.New(err.Error())
 	}
 
-	return b.toEntity(), nil
+	return nil
 }

@@ -17,3 +17,8 @@ type Body string
 func (b Body) String() string {
 	return string(b)
 }
+
+type Boards struct {
+	Body         Body
+	UsersDetails UsersDetails
+}

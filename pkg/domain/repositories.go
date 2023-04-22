@@ -14,5 +14,5 @@ type UserRepository interface {
 type BoardRepository interface {
 	GetBoard(context.Context, Gender) ([]*Board, error)
 	CreateBoard(context.Context, *Board) (*Board, error)
-	DeleteBoard(context.Context, BoardID) (*Board, error)
+	DeleteBoard(context.Context, BoardID) error
 }

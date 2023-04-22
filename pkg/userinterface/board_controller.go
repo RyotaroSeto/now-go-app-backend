@@ -102,8 +102,7 @@ func (c *BoardController) DeleteBoardHandler(ctx *gin.Context) {
 		return
 	}
 
-	bID := domain.BoardID(req.ID)
-	_, err := c.service.BoardDelete(ctx, bID)
+	err := c.service.BoardDelete(ctx, domain.BoardID(req.ID))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
