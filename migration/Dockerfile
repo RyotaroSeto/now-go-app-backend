@@ -21,4 +21,4 @@ RUN apk update && apk add --no-cache make
 COPY ./ ./
 COPY --from=builder ${GOOSE_PATH} /bin
 
-CMD [ "make", "all-up" ]
+CMD [ "make", "gooseup" ]

@@ -12,18 +12,18 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d
 
-  # migration:
-  #   container_name: migration
-  #   build:
-  #     context: ./migration
-  #     dockerfile: Dockerfile
-  #   tty: true
-  #   stdin_open: true
-  #   depends_on:
-  #     - nowdb
-  #   volumes:
-  #     - ./migration:/src
-  #   command: ["tail", "-f", "/dev/null"]
+  migration:
+    container_name: migration
+    build:
+      context: ./migration
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    depends_on:
+      - nowdb
+    volumes:
+      - ./migration:/src
+    command: ["tail", "-f", "/dev/null"]
 
   nowapi:
     container_name: api
