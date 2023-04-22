@@ -35,8 +35,11 @@ func (us *Board) bindEntity(e *domain.Board) {
 }
 
 func (u *Board) fromEntity(e *domain.Board) {
+	// var ud UsersDetails
+	// ud.fromEntity(&e.Discount)
 	u.UserID = e.UserID.Num()
 	u.Body = e.Body.String()
+	// u.UsersDetails = e.UsersDetails
 }
 
 type BoardRepository struct {

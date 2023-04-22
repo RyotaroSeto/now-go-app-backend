@@ -16,3 +16,6 @@ type BoardRepository interface {
 	CreateBoard(context.Context, *Board) (*Board, error)
 	DeleteBoard(context.Context, BoardID) error
 }
+
+type MessageRepository interface {
+}

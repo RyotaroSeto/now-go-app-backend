@@ -65,6 +65,15 @@ func RegisterBoardHandlers(root *gin.RouterGroup) {
 	}
 }
 
+func RegisterMessageHandlers(root *gin.RouterGroup) {
+	message := injection.InitializeMessageController()
+
+	session := root.Group("/message")
+	{
+		session.POST("/", message.CreateMessageHandler)
+	}
+}
+
 func RegisterNotFoundHandler(router *gin.Engine) {
 	router.NoRoute(func(c *gin.Context) {
 		c.Status(http.StatusNotFound)

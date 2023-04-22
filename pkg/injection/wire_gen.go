@@ -43,3 +43,11 @@ func InitializeBoardController() *userinterface.BoardController {
 	boardController := userinterface.NewBoardController(boardService)
 	return boardController
 }
+
+func InitializeMessageController() *userinterface.MessageController {
+	messageRepository := infrastructure.NewMessageRepository()
+	db := infrastructure.GetDB()
+	messageService := application.NewMessageService(messageRepository, db)
+	messageController := userinterface.NewMessageController(messageService)
+	return messageController
+}

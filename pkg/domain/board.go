@@ -1,9 +1,10 @@
 package domain
 
 type Board struct {
-	ID     BoardID
-	UserID UserID
-	Body   Body
+	ID           BoardID
+	UserID       UserID
+	Body         Body
+	UsersDetails UsersDetails
 }
 
 type BoardID int
@@ -16,9 +17,4 @@ type Body string
 
 func (b Body) String() string {
 	return string(b)
-}
-
-type Boards struct {
-	Body         Body
-	UsersDetails UsersDetails
 }

@@ -19,3 +19,6 @@ type BoardService interface {
 	BoardCreate(context.Context, *domain.Board) (*domain.Board, error)
 	BoardDelete(context.Context, domain.BoardID) error
 }
+
+type MessageService interface {
+}

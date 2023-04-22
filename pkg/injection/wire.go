@@ -59,3 +59,22 @@ func InitializeBoardController() *userinterface.BoardController {
 
 	return nil
 }
+
+func InitializeMessageController() *userinterface.MessageController {
+	wire.Build(
+		infrastructure.GetDB,
+		wire.Bind(
+			new(application.Transaction),
+			new(*infrastructure.DB),
+		),
+		infrastructure.NewMessageRepository,
+		wire.Bind(
+			new(domain.MessageRepository),
+			new(*infrastructure.MessageRepository),
+		),
+		application.NewMessageService,
+		userinterface.NewMessageController,
+	)
+
+	return nil
+}
