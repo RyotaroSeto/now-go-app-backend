@@ -1,9 +1,12 @@
 package domain
 
+import "time"
+
 type Board struct {
 	ID           BoardID
 	UserID       UserID
 	Body         Body
+	CreatedDate  time.Time
 	UsersDetails UsersDetails
 }
 

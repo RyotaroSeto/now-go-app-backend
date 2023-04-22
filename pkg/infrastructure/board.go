@@ -21,8 +21,11 @@ type Board struct {
 
 func (u *Board) toEntity() *domain.Board {
 	board := &domain.Board{
-		UserID: domain.UserID(u.UserID),
-		Body:   domain.Body(u.Body),
+		ID:           domain.BoardID(u.ID),
+		UserID:       domain.UserID(u.UserID),
+		Body:         domain.Body(u.Body),
+		CreatedDate:  u.CreatedDate,
+		UsersDetails: *u.UsersDetails.toEntity(),
 	}
 
 	return board
@@ -32,14 +35,16 @@ func (us *Board) bindEntity(e *domain.Board) {
 	u := us.toEntity()
 	e.UserID = u.UserID
 	e.Body = u.Body
+	e.UsersDetails = u.UsersDetails
 }
 
 func (u *Board) fromEntity(e *domain.Board) {
-	// var ud UsersDetails
-	// ud.fromEntity(&e.Discount)
+	var ud UsersDetails
+	ud.fromEntity(&e.UsersDetails)
+
 	u.UserID = e.UserID.Num()
 	u.Body = e.Body.String()
-	// u.UsersDetails = e.UsersDetails
+	u.UsersDetails = ud
 }
 
 type BoardRepository struct {
@@ -72,13 +77,13 @@ func (u *BoardRepository) GetBoard(ctx context.Context, gender domain.Gender) ([
 		log.Println(err)
 		return nil, errors.New(err.Error())
 	}
-	log.Println(b)
-	// bs := domain.Board{}
-	// for _, a := range b {
-	// 	bs = append(bs, *a.toEntity())
-	// }
-	// 	return mls, nil
-	return nil, nil
+
+	bs := []*domain.Board{}
+	for _, a := range b {
+		bs = append(bs, a.toEntity())
+	}
+
+	return bs, nil
 }
 
 func (u *BoardRepository) CreateBoard(ctx context.Context, uParam *domain.Board) (*domain.Board, error) {

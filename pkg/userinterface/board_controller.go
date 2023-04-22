@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"now-go-kon/pkg/application"
 	"now-go-kon/pkg/domain"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,14 +22,21 @@ type BoardGetRequest struct {
 }
 
 type GetBoardResponse struct {
-	ID   int    `json:"id"`
-	Body string `json:"body"`
+	BoardID     int       `json:"board_id"`
+	UserID      int       `json:"user_id"`
+	Body        string    `json:"body"`
+	CreatedDate time.Time `json:"created_date"`
 }
 
 func BoardGetResponse(us []*domain.Board) []GetBoardResponse {
 	var br []GetBoardResponse
 	for _, v := range us {
-		br = append(br, GetBoardResponse{ID: v.UserID.Num(), Body: v.Body.String()})
+		br = append(br, GetBoardResponse{
+			BoardID:     v.ID.Num(),
+			UserID:      v.UserID.Num(),
+			Body:        v.Body.String(),
+			CreatedDate: v.CreatedDate,
+		})
 	}
 	return br
 }
@@ -41,13 +49,13 @@ func (c *BoardController) GetBoardHandler(ctx *gin.Context) {
 	}
 
 	dGender := domain.Gender(req.Gender)
-	board, err := c.service.BoardGet(ctx, dGender)
+	boards, err := c.service.BoardGet(ctx, dGender)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}
 
-	res := BoardGetResponse(board)
+	res := BoardGetResponse(boards)
 	ctx.JSON(http.StatusOK, res)
 }
 
