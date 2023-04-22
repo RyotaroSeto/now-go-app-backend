@@ -11,11 +11,12 @@ import (
 )
 
 type Board struct {
-	ID          int       `gorm:"column:id;primaryKey,omitempty"`
-	UserID      int       `gorm:"column:user_id"`
-	Body        string    `gorm:"column:body"`
-	CreatedDate time.Time `gorm:"column:created_date;autoCreateTime"`
-	UpdatedDate time.Time `gorm:"column:updated_date;autoUpdateTime"`
+	ID           int          `gorm:"column:id;primaryKey,omitempty"`
+	UserID       int          `gorm:"column:user_id"`
+	Body         string       `gorm:"column:body"`
+	CreatedDate  time.Time    `gorm:"column:created_date;autoCreateTime"`
+	UpdatedDate  time.Time    `gorm:"column:updated_date;autoUpdateTime"`
+	UsersDetails UsersDetails `gorm:"foreignKey:UserID;references:UserID"`
 }
 
 func (u *Board) toEntity() *domain.Board {
@@ -57,7 +58,23 @@ func (u *BoardRepository) conn(ctx context.Context) *gorm.DB {
 	return u.db.Session(&gorm.Session{})
 }
 
-func (u *BoardRepository) GetBoard(ctx context.Context) ([]*domain.Board, error) {
+func (u *BoardRepository) GetBoard(ctx context.Context, gender domain.Gender) ([]*domain.Board, error) {
+	b := []Board{}
+	res := u.conn(ctx).Joins("inner join users_details on boards.user_id = users_details.user_id").Where("users_details.gender != ?", gender.String()).Order("boards.created_date desc").Limit(20).Find(&b)
+	if res.RowsAffected == 0 {
+		msg := "board: is not found"
+		return nil, errors.New(msg)
+	}
+	if err := res.Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+	log.Println(b)
+	// 	mls := myrakus.MyRakusLicenses{}
+	// 	for _, a := range ml {
+	// 		mls = append(mls, *a.toEntity())
+	// 	}
+	// 	return mls, nil
 	return nil, nil
 }
 

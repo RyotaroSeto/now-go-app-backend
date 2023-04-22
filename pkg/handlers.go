@@ -38,8 +38,8 @@ func RegisterUserHandlers(root *gin.RouterGroup) {
 
 	users := root.Group("/users")
 	{
-		users.POST("/profile", user.GetProfileHandler)
-		users.PUT("/update", user.UpdateProfileHandler)
+		users.GET("/", user.GetProfileHandler)
+		users.PUT("/", user.UpdateProfileHandler)
 	}
 }
 

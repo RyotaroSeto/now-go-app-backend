@@ -16,6 +16,10 @@ func NewBoardController(service application.BoardService) *BoardController {
 	return &BoardController{service: service}
 }
 
+type BoardGetRequest struct {
+	Gender string `form:"gender"`
+}
+
 type GetBoardResponse struct {
 	ID   int    `json:"id"`
 	Body string `json:"body"`
@@ -30,7 +34,14 @@ func BoardGetResponse(us []*domain.Board) []GetBoardResponse {
 }
 
 func (c *BoardController) GetBoardHandler(ctx *gin.Context) {
-	board, err := c.service.BoardGet(ctx)
+	var req BoardGetRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	dGender := domain.Gender(req.Gender)
+	board, err := c.service.BoardGet(ctx, dGender)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
@@ -84,10 +95,6 @@ type BoardDeleteRequest struct {
 	ID int `json:"id"`
 }
 
-func (r *BoardDeleteRequest) toParams() domain.BoardID {
-	return domain.BoardID(r.ID)
-}
-
 func (c *BoardController) DeleteBoardHandler(ctx *gin.Context) {
 	var req BoardDeleteRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -95,7 +102,7 @@ func (c *BoardController) DeleteBoardHandler(ctx *gin.Context) {
 		return
 	}
 
-	bID := req.toParams()
+	bID := domain.BoardID(req.ID)
 	_, err := c.service.BoardDelete(ctx, bID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))

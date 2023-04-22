@@ -17,11 +17,7 @@ func NewUserController(service application.UserService) *UserController {
 }
 
 type UserRequest struct {
-	ID int `json:"id"`
-}
-
-func (r *UserRequest) toParams() domain.UserID {
-	return domain.UserID(r.ID)
+	ID int `form:"id"`
 }
 
 type UserResponse struct {
@@ -54,12 +50,12 @@ func UserProfileResponse(u *domain.User) UserResponse {
 
 func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 	var req UserRequest
-	if err := ctx.ShouldBindJSON(&req); err != nil {
+	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}
 
-	id := req.toParams()
+	id := domain.UserID(req.ID)
 	user, err := c.service.User(ctx, id)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
