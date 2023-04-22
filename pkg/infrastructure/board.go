@@ -57,6 +57,10 @@ func (u *BoardRepository) conn(ctx context.Context) *gorm.DB {
 	return u.db.Session(&gorm.Session{})
 }
 
+func (u *BoardRepository) GetBoard(ctx context.Context) ([]*domain.Board, error) {
+	return nil, nil
+}
+
 func (u *BoardRepository) CreateBoard(ctx context.Context, uParam *domain.Board) (*domain.Board, error) {
 	var b Board
 	b.fromEntity(uParam)

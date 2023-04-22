@@ -12,6 +12,7 @@ type UserRepository interface {
 }
 
 type BoardRepository interface {
+	GetBoard(context.Context) ([]*Board, error)
 	CreateBoard(context.Context, *Board) (*Board, error)
 	DeleteBoard(context.Context, BoardID) (*Board, error)
 }

@@ -16,6 +16,30 @@ func NewBoardController(service application.BoardService) *BoardController {
 	return &BoardController{service: service}
 }
 
+type GetBoardResponse struct {
+	ID   int    `json:"id"`
+	Body string `json:"body"`
+}
+
+func BoardGetResponse(us []*domain.Board) []GetBoardResponse {
+	var br []GetBoardResponse
+	for _, v := range us {
+		br = append(br, GetBoardResponse{ID: v.UserID.Num(), Body: v.Body.String()})
+	}
+	return br
+}
+
+func (c *BoardController) GetBoardHandler(ctx *gin.Context) {
+	board, err := c.service.BoardGet(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	res := BoardGetResponse(board)
+	ctx.JSON(http.StatusOK, res)
+}
+
 type BoardRequest struct {
 	ID   int    `json:"id"`
 	Body string `json:"body"`
@@ -46,7 +70,7 @@ func (c *BoardController) CreateBoardHandler(ctx *gin.Context) {
 	}
 
 	uParam := req.toParams()
-	board, err := c.service.Board(ctx, uParam)
+	board, err := c.service.BoardCreate(ctx, uParam)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return

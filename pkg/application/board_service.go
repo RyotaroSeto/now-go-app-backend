@@ -20,7 +20,26 @@ func NewBoardService(repo domain.BoardRepository, tx Transaction) BoardService {
 
 var _ BoardService = new(boardService)
 
-func (s *boardService) Board(ctx context.Context, uParam *domain.Board) (board *domain.Board, err error) {
+func (s *boardService) BoardGet(ctx context.Context) (boards []*domain.Board, err error) {
+	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		b, err := s.repo.GetBoard(ctx)
+		log.Println(b)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		// board = b
+		return nil
+	})
+	return nil, nil
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// return board, err
+}
+
+func (s *boardService) BoardCreate(ctx context.Context, uParam *domain.Board) (board *domain.Board, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
 		b, err := s.repo.CreateBoard(ctx, uParam)
 		if err != nil {

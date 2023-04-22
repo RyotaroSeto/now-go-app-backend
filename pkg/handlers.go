@@ -59,6 +59,7 @@ func RegisterBoardHandlers(root *gin.RouterGroup) {
 
 	session := root.Group("/board")
 	{
+		session.GET("/", board.GetBoardHandler)
 		session.POST("/", board.CreateBoardHandler)
 		session.DELETE("/", board.DeleteBoardHandler)
 	}
