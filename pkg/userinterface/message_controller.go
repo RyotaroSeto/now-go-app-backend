@@ -17,3 +17,7 @@ func NewMessageController(service application.MessageService) *MessageController
 func (c *MessageController) CreateMessageHandler(ctx *gin.Context) {
 	// ctx.JSON(http.StatusOK, res)
 }
+
+func (c *MessageController) GetMessageHandler(ctx *gin.Context) {
+	// ctx.JSON(http.StatusOK, res)
+}
