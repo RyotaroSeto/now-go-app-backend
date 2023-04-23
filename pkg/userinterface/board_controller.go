@@ -59,6 +59,30 @@ func (c *BoardController) GetBoardHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
+type ScrollRequest struct {
+	Gender  string `form:"gender"`
+	BoardID int    `form:"board_id"`
+}
+
+func (c *BoardController) GetScrollHandler(ctx *gin.Context) {
+	var req ScrollRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	dGender := domain.Gender(req.Gender)
+	lastBordID := domain.BoardID(req.BoardID)
+	nextBoards, err := c.service.ScrollBoardGet(ctx, dGender, lastBordID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	res := BoardGetResponse(nextBoards)
+	ctx.JSON(http.StatusOK, res)
+}
+
 type BoardRequest struct {
 	ID   int    `json:"id"`
 	Body string `json:"body"`

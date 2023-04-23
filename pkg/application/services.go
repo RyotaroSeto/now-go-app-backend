@@ -16,6 +16,7 @@ type UserService interface {
 
 type BoardService interface {
 	BoardGet(context.Context, domain.Gender) ([]*domain.Board, error)
+	ScrollBoardGet(context.Context, domain.Gender, domain.BoardID) ([]*domain.Board, error)
 	BoardCreate(context.Context, *domain.Board) (*domain.Board, error)
 	BoardDelete(context.Context, domain.BoardID) error
 }

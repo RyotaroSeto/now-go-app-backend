@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"now-go-kon/pkg/domain"
 	"time"
@@ -69,6 +70,38 @@ func (u *BoardRepository) conn(ctx context.Context) *gorm.DB {
 func (u *BoardRepository) GetBoard(ctx context.Context, gender domain.Gender) ([]*domain.Board, error) {
 	b := []Board{}
 	res := u.conn(ctx).Joins("inner join users_details on boards.user_id = users_details.user_id").Where("users_details.gender != ?", gender.String()).Order("boards.created_date desc").Limit(20).Find(&b)
+	if res.RowsAffected == 0 {
+		msg := "board: is not found"
+		return nil, errors.New(msg)
+	}
+	if err := res.Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+
+	bs := []*domain.Board{}
+	for _, a := range b {
+		bs = append(bs, a.toEntity())
+	}
+
+	return bs, nil
+}
+
+func (u *BoardRepository) GetScrollBoard(ctx context.Context, gender domain.Gender, boardID domain.BoardID) ([]*domain.Board, error) {
+	bd := Board{}
+	q := Board{ID: boardID.Num()}
+	res := u.conn(ctx).Where(&q).First(&bd)
+	if err := res.Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			msg := fmt.Sprintf("BoardID: %d is not found", boardID.Num())
+			return nil, errors.New(msg)
+
+		}
+		return nil, err
+	}
+
+	b := []Board{}
+	res = u.conn(ctx).Joins("inner join users_details on boards.user_id = users_details.user_id").Where("boards.created_date < ?", bd.CreatedDate).Where("users_details.gender != ?", gender.String()).Order("boards.created_date desc").Limit(20).Find(&b)
 	if res.RowsAffected == 0 {
 		msg := "board: is not found"
 		return nil, errors.New(msg)

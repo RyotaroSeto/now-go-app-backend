@@ -37,6 +37,23 @@ func (s *boardService) BoardGet(ctx context.Context, gender domain.Gender) (boar
 	return boards, err
 }
 
+func (s *boardService) ScrollBoardGet(ctx context.Context, gender domain.Gender, boardID domain.BoardID) (boards []*domain.Board, err error) {
+	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		b, err := s.repo.GetScrollBoard(ctx, gender, boardID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		boards = b
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return boards, err
+}
+
 func (s *boardService) BoardCreate(ctx context.Context, uParam *domain.Board) (board *domain.Board, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
 		b, err := s.repo.CreateBoard(ctx, uParam)

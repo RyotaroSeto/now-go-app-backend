@@ -13,6 +13,7 @@ type UserRepository interface {
 
 type BoardRepository interface {
 	GetBoard(context.Context, Gender) ([]*Board, error)
+	GetScrollBoard(context.Context, Gender, BoardID) ([]*Board, error)
 	CreateBoard(context.Context, *Board) (*Board, error)
 	DeleteBoard(context.Context, BoardID) error
 }
