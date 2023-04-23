@@ -14,10 +14,14 @@ func NewMessageController(service application.MessageService) *MessageController
 	return &MessageController{service: service}
 }
 
-func (c *MessageController) CreateMessageHandler(ctx *gin.Context) {
+func (c *MessageController) GetMessageHandler(ctx *gin.Context) {
 	// ctx.JSON(http.StatusOK, res)
 }
 
-func (c *MessageController) GetMessageHandler(ctx *gin.Context) {
+func (c *MessageController) GetMessageScrollHandler(ctx *gin.Context) {
+	// ctx.JSON(http.StatusOK, res)
+}
+
+func (c *MessageController) CreateMessageHandler(ctx *gin.Context) {
 	// ctx.JSON(http.StatusOK, res)
 }

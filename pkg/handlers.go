@@ -72,7 +72,7 @@ func RegisterMessageHandlers(root *gin.RouterGroup) {
 	session := root.Group("/message")
 	{
 		session.GET("/", message.GetMessageHandler)
-		session.GET("/scroll", message.GetMessageHandler)
+		session.GET("/scroll", message.GetMessageScrollHandler)
 		session.POST("/", message.CreateMessageHandler)
 	}
 }
