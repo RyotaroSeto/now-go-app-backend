@@ -60,6 +60,25 @@ func InitializeBoardController() *userinterface.BoardController {
 	return nil
 }
 
+func InitializeLikeController() *userinterface.LikeController {
+	wire.Build(
+		infrastructure.GetDB,
+		wire.Bind(
+			new(application.Transaction),
+			new(*infrastructure.DB),
+		),
+		infrastructure.NewLikeRepository,
+		wire.Bind(
+			new(domain.LikeRepository),
+			new(*infrastructure.LikeRepository),
+		),
+		application.NewLikeService,
+		userinterface.NewLikeController,
+	)
+
+	return nil
+}
+
 func InitializeMessageController() *userinterface.MessageController {
 	wire.Build(
 		infrastructure.GetDB,

@@ -30,6 +30,7 @@ func RegisterHandlers(e *gin.Engine) {
 		RegisterAuthenticationHandlers(root)
 		RegisterUserHandlers(root)
 		RegisterBoardHandlers(root)
+		RegisterLikeHandlers(root)
 	}
 }
 
@@ -63,6 +64,15 @@ func RegisterBoardHandlers(root *gin.RouterGroup) {
 		session.GET("/scroll", board.GetBoardScrollHandler)
 		session.POST("/", board.CreateBoardHandler)
 		session.DELETE("/", board.DeleteBoardHandler)
+	}
+}
+
+func RegisterLikeHandlers(root *gin.RouterGroup) {
+	like := injection.InitializeLikeController()
+
+	session := root.Group("/like")
+	{
+		session.POST("/", like.CreateLikeHandler)
 	}
 }
 

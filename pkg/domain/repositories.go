@@ -18,5 +18,9 @@ type BoardRepository interface {
 	DeleteBoard(context.Context, BoardID) error
 }
 
+type LikeRepository interface {
+	CreateLike(context.Context, *Like) error
+}
+
 type MessageRepository interface {
 }

@@ -44,6 +44,15 @@ func InitializeBoardController() *userinterface.BoardController {
 	return boardController
 }
 
+func InitializeLikeController() *userinterface.LikeController {
+	likeRepository := infrastructure.NewLikeRepository()
+	db := infrastructure.GetDB()
+	likeService := application.NewLikeService(likeRepository, db)
+	likeController := userinterface.NewLikeController(likeService)
+	return likeController
+}
+
+
 func InitializeMessageController() *userinterface.MessageController {
 	messageRepository := infrastructure.NewMessageRepository()
 	db := infrastructure.GetDB()

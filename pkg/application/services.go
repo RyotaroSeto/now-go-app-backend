@@ -21,5 +21,9 @@ type BoardService interface {
 	BoardDelete(context.Context, domain.BoardID) error
 }
 
+type LikeService interface {
+	LikeCreate(context.Context, *domain.Like) error
+}
+
 type MessageService interface {
 }
