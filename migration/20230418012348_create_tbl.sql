@@ -30,7 +30,9 @@ CREATE INDEX ON users_details (user_id);
 CREATE TABLE IF NOT EXISTS likes (
     user_id INT,
     liked_user_id INT,
-    liked_date DATE,
+    liked_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,,
+    status INT NOT NULL,
+    message_body VARCHAR(255),
     PRIMARY KEY (user_id, liked_user_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (liked_user_id) REFERENCES users(id)
@@ -39,24 +41,25 @@ CREATE TABLE IF NOT EXISTS likes (
 CREATE INDEX ON likes (user_id);
 CREATE INDEX ON likes (liked_user_id);
 
-CREATE TABLE IF NOT EXISTS match (
-    user_id INT,
-    matched_user_id INT,
-    matched_date DATE,
-    PRIMARY KEY (user_id, matched_user_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (matched_user_id) REFERENCES users(id)
-);
+-- CREATE TABLE IF NOT EXISTS match (
+--     user_id INT,
+--     matched_user_id INT,
+--     matched_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,,
+--     PRIMARY KEY (user_id, matched_user_id),
+--     FOREIGN KEY (user_id) REFERENCES users(id),
+--     FOREIGN KEY (matched_user_id) REFERENCES users(id)
+-- );
 
-CREATE INDEX ON match (user_id);
-CREATE INDEX ON match (matched_user_id);
+-- CREATE INDEX ON match (user_id);
+-- CREATE INDEX ON match (matched_user_id);
 
 CREATE TABLE IF NOT EXISTS message (
     id SERIAL PRIMARY KEY,
     sender_user_id INT,
     receiver_user_id INT,
     message_body VARCHAR(255),
-    sent_date DATE,
+    status INT NOT NULL,
+    sent_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,,
     FOREIGN KEY (sender_user_id) REFERENCES users(id),
     FOREIGN KEY (receiver_user_id) REFERENCES users(id)
 );
