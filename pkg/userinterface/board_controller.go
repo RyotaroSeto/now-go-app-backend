@@ -64,7 +64,7 @@ type ScrollRequest struct {
 	BoardID int    `form:"board_id"`
 }
 
-func (c *BoardController) GetScrollHandler(ctx *gin.Context) {
+func (c *BoardController) GetBoardScrollHandler(ctx *gin.Context) {
 	var req ScrollRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
