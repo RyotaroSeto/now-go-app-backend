@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL,
-    status INT NOT NULL,
+    status INT NOT NULL DEFAULT 1,
     email VARCHAR(255) NOT NULL,
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS likes (
     user_id INT,
     liked_user_id INT,
     liked_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    status INT NOT NULL,
+    status INT NOT NULL DEFAULT 1,
     message_body VARCHAR(255),
     PRIMARY KEY (user_id, liked_user_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS message (
     sender_user_id INT,
     receiver_user_id INT,
     message_body VARCHAR(255),
-    status INT NOT NULL,
+    status INT NOT NULL DEFAULT 1,
     sent_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_user_id) REFERENCES users(id),
     FOREIGN KEY (receiver_user_id) REFERENCES users(id)
@@ -86,11 +86,10 @@ DROP TABLE users;
 
 DROP TABLE users_details;
 
-
-DROP TABLE match;
+-- DROP TABLE match;
 
 DROP TABLE message;
 
 DROP TABLE go_post;
 
--- DROP TABLE likes;
+DROP TABLE likes;
