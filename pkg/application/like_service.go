@@ -34,3 +34,20 @@ func (s *likeService) LikeCreate(ctx context.Context, uParam *domain.Like) (err 
 
 	return err
 }
+
+func (s *likeService) LikeGet(ctx context.Context, uID domain.UserID) (likes []*domain.Like, err error) {
+	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		l, err := s.repo.GetLiked(ctx, uID)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		likes = l
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return likes, err
+}

@@ -16,6 +16,43 @@ func NewLikeController(service application.LikeService) *LikeController {
 	return &LikeController{service: service}
 }
 
+type GetLikeRequest struct {
+	UserID int `json:"user_id"`
+}
+
+// func LikedGetResponse(us []*domain.Like) []GetBoardResponse {
+// 	var br []GetBoardResponse
+// 	for _, v := range us {
+// 		br = append(br, GetBoardResponse{
+// 			BoardID:     v.ID.Num(),
+// 			UserID:      v.UserID.Num(),
+// 			Body:        v.Body.String(),
+// 			CreatedDate: v.CreatedDate,
+// 		})
+// 	}
+// 	return br
+// }
+
+func (c *LikeController) GetLikeHandler(ctx *gin.Context) {
+	var req LikeRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	uID := domain.UserID(req.UserID)
+	_, err := c.service.LikeGet(ctx, uID)
+	// likes, err := c.service.LikeGet(ctx, uID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	// res := LikedGetResponse(likes)
+	// ctx.JSON(http.StatusOK, res)
+	ctx.Status(http.StatusOK)
+}
+
 type LikeRequest struct {
 	UserID      int    `json:"user_id"`
 	LikedUserID int    `json:"liked_user_id"`

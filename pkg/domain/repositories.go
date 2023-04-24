@@ -19,6 +19,7 @@ type BoardRepository interface {
 }
 
 type LikeRepository interface {
+	GetLiked(context.Context, UserID) ([]*Like, error)
 	CreateLike(context.Context, *Like) error
 }
 

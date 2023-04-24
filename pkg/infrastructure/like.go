@@ -43,6 +43,10 @@ func (u *LikeRepository) conn(ctx context.Context) *gorm.DB {
 	return u.db.Session(&gorm.Session{})
 }
 
+func (u *LikeRepository) GetLiked(ctx context.Context, uID domain.UserID) ([]*domain.Like, error) {
+	return nil, nil
+}
+
 func (u *LikeRepository) CreateLike(ctx context.Context, uParam *domain.Like) error {
 	var l Like
 	l.fromEntity(uParam)

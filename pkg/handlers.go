@@ -72,7 +72,9 @@ func RegisterLikeHandlers(root *gin.RouterGroup) {
 
 	session := root.Group("/like")
 	{
+		session.GET("/", like.GetLikeHandler)
 		session.POST("/", like.CreateLikeHandler)
+
 	}
 }
 
