@@ -1,8 +1,11 @@
 package domain
 
+import "time"
+
 type Like struct {
 	UserID      UserID
 	LikedUserID UserID
+	LikedDate   time.Time
 	Status      Status
 	MessageBody MessageBody
 }

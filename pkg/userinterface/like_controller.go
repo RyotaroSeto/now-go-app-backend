@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"now-go-kon/pkg/application"
 	"now-go-kon/pkg/domain"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,8 +22,9 @@ type GetLikeRequest struct {
 }
 
 type GetLikedResponse struct {
-	LikedUserID int    `json:"liked_user_id"`
-	MessageBody string `json:"message_body"`
+	LikedUserID int       `json:"liked_user_id"`
+	LikedDate   time.Time `json:"liked_date"`
+	MessageBody string    `json:"message_body"`
 }
 
 func LikedGetResponse(us []*domain.Like) []GetLikedResponse {
@@ -30,6 +32,7 @@ func LikedGetResponse(us []*domain.Like) []GetLikedResponse {
 	for _, v := range us {
 		lr = append(lr, GetLikedResponse{
 			LikedUserID: v.LikedUserID.Num(),
+			LikedDate:   v.LikedDate,
 			MessageBody: v.MessageBody.String(),
 		})
 	}
@@ -38,7 +41,7 @@ func LikedGetResponse(us []*domain.Like) []GetLikedResponse {
 
 func (c *LikeController) GetLikeHandler(ctx *gin.Context) {
 	var req LikeRequest
-	if err := ctx.ShouldBindJSON(&req); err != nil {
+	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}

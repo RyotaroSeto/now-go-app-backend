@@ -18,6 +18,18 @@ type Like struct {
 	MessageBody string    `gorm:"column:message_body"`
 }
 
+func (u *Like) toEntity() *domain.Like {
+	board := &domain.Like{
+		UserID:      domain.UserID(u.UserID),
+		LikedUserID: domain.UserID(u.LikedUserID),
+		LikedDate:   u.LikedDate,
+		Status:      domain.Status(u.Status),
+		MessageBody: domain.MessageBody(u.MessageBody),
+	}
+
+	return board
+}
+
 func (u *Like) fromEntity(e *domain.Like) {
 	u.UserID = e.UserID.Num()
 	u.LikedUserID = e.LikedUserID.Num()
@@ -44,7 +56,24 @@ func (u *LikeRepository) conn(ctx context.Context) *gorm.DB {
 }
 
 func (u *LikeRepository) GetLiked(ctx context.Context, uID domain.UserID) ([]*domain.Like, error) {
-	return nil, nil
+	l := []Like{}
+
+	q := Like{UserID: uID.Num(), Status: 1}
+	res := u.conn(ctx).Where(&q).Order("likes.liked_date desc").Find(&l)
+	if res.RowsAffected == 0 {
+		msg := "user_id: is not found"
+		return nil, errors.New(msg)
+	}
+	if err := res.Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+
+	ls := []*domain.Like{}
+	for _, a := range l {
+		ls = append(ls, a.toEntity())
+	}
+	return ls, nil
 }
 
 func (u *LikeRepository) CreateLike(ctx context.Context, uParam *domain.Like) error {
