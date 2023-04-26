@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - openapi.yml
+      - docs/swagger.yaml
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
         uses: Legion2/swagger-ui-action@v1
         with:
           output: dist
-          spec-file: openapi.yml
+          spec-file: docs/swagger.yaml
       - name: Deploy to GitHub Pages
         uses: actions/upload-pages-artifact@v1
         with:
