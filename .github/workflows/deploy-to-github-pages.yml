@@ -24,7 +24,7 @@ jobs:
 
       - name: Validate Swagger Files
         run: |
-          swagger-cli validate -d openapi.yml --type yml
+          swagger-cli validate -d openapi.yml --type yaml
 
 
       - name: Generate Swagger UI
