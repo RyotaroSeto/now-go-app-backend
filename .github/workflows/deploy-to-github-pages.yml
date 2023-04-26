@@ -1,23 +1,26 @@
 name: Deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
-      - closed
-    paths:
-      - openapi.yml
-      - .github/workflows/deploy-to-github-pages.yml
 
 jobs:
   deploy-to-github-pages:
     permissions:
-      pages: write
       id-token: write
-      contents: read
+      contents: write
+      actions: write
+      checks: write
+      deployments: write
+      discussions: write
+      issues: write
+      pages: write
+      packages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+      statuses: write
 
     runs-on: ubuntu-latest
     steps:
