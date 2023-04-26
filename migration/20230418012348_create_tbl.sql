@@ -42,7 +42,7 @@ CREATE INDEX ON likes (user_id);
 CREATE INDEX ON likes (liked_user_id);
 
 
-CREATE TABLE IF NOT EXISTS message (
+CREATE TABLE IF NOT EXISTS messages (
     id SERIAL PRIMARY KEY,
     sender_user_id INT,
     receiver_user_id INT,
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS message (
     FOREIGN KEY (receiver_user_id) REFERENCES users(id)
 );
 
-CREATE INDEX ON message (sender_user_id);
-CREATE INDEX ON message (receiver_user_id);
+CREATE INDEX ON messages (sender_user_id);
+CREATE INDEX ON messages (receiver_user_id);
 
 CREATE TABLE IF NOT EXISTS boards (
     id SERIAL PRIMARY KEY,
@@ -88,7 +88,7 @@ DROP TABLE users_details;
 
 -- DROP TABLE match;
 
-DROP TABLE message;
+DROP TABLE messages;
 
 DROP TABLE go_post;
 
