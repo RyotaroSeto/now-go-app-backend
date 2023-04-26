@@ -21,6 +21,7 @@ type BoardRepository interface {
 type LikeRepository interface {
 	GetLiked(context.Context, UserID) ([]*Like, error)
 	CreateLike(context.Context, *Like) error
+	ApprovalUser(context.Context, *Like) error
 }
 
 type MessageRepository interface {

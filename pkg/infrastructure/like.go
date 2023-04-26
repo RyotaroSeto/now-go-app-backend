@@ -87,3 +87,36 @@ func (u *LikeRepository) CreateLike(ctx context.Context, uParam *domain.Like) er
 
 	return nil
 }
+
+func (u *LikeRepository) ApprovalUser(ctx context.Context, uParam *domain.Like) error {
+	q := Like{UserID: uParam.UserID.Num(), LikedUserID: uParam.LikedUserID.Num()}
+	if err := u.conn(ctx).Model(&Like{}).Where(&q).Update("status", 0).Error; err != nil {
+		log.Println(err)
+		return errors.New(err.Error())
+	}
+	var l Like
+	res := u.conn(ctx).Where(&q).First(&l)
+	if res.RowsAffected == 0 {
+		msg := "user_id: is not found"
+		return errors.New(msg)
+	}
+	if err := res.Error; err != nil {
+		log.Println(err)
+		return errors.New(err.Error())
+	}
+
+	var m Message
+	mParam := &domain.Message{
+		SenderUserID:   uParam.UserID,
+		ReceiverUserID: uParam.LikedUserID,
+		MessageBody:    domain.MessageBody(l.MessageBody),
+		SentDate:       l.LikedDate,
+	}
+	m.fromEntity(mParam)
+	if err := u.conn(ctx).Create(&m).Error; err != nil {
+		log.Println(err)
+		return errors.New(err.Error())
+	}
+
+	return nil
+}

@@ -24,6 +24,7 @@ type BoardService interface {
 type LikeService interface {
 	LikeCreate(context.Context, *domain.Like) error
 	LikeGet(context.Context, domain.UserID) ([]*domain.Like, error)
+	Approval(context.Context, *domain.Like) error
 }
 
 type MessageService interface {

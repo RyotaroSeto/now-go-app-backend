@@ -86,3 +86,31 @@ func (c *LikeController) CreateLikeHandler(ctx *gin.Context) {
 
 	ctx.Status(http.StatusOK)
 }
+
+type ApprovalRequest struct {
+	UserID      int `json:"user_id"`
+	LikedUserID int `json:"liked_user_id"`
+}
+
+func (r *ApprovalRequest) toParams() *domain.Like {
+	return &domain.Like{
+		UserID:      domain.UserID(r.UserID),
+		LikedUserID: domain.UserID(r.LikedUserID),
+	}
+}
+
+func (c *LikeController) ApprovalHandler(ctx *gin.Context) {
+	var req ApprovalRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	uParam := req.toParams()
+	if err := c.service.Approval(ctx, uParam); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	ctx.Status(http.StatusOK)
+}

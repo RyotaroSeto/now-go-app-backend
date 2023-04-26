@@ -74,6 +74,7 @@ func RegisterLikeHandlers(root *gin.RouterGroup) {
 	{
 		session.GET("/", like.GetLikeHandler)
 		session.POST("/", like.CreateLikeHandler)
+		session.POST("/approval", like.ApprovalHandler)
 
 	}
 }
