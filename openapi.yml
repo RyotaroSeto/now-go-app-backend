@@ -66,8 +66,6 @@ components:
             - "pending"
             - "active"
             - "inactive"
-
-
     Error:
       type: "object"
       properties:
