@@ -19,7 +19,7 @@ jobs:
       - name: Install Swag
         run: go install github.com/swaggo/swag/cmd/swag@latest
       - name: Run Swag
-        run: make swag
+        run: swag init
         working-directory: ./pkg
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
