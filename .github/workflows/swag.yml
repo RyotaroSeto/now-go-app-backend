@@ -23,9 +23,7 @@ jobs:
       - name: Install Swag
         run: go install github.com/swaggo/swag/cmd/swag@latest
       - name: Run Swag
-        run: |
-          pwd
-          swag init
+        run: swag init
       - name: Generate Html
         run: |
           npm install -g bootprint
