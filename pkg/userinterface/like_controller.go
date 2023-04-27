@@ -42,11 +42,11 @@ func LikedGetResponse(us []*domain.Like) []GetLikedResponse {
 // GetLikeHandler GoDoc
 // @Summary           いいね一覧参照 API
 // @Description       自身にいいねをしたユーザー一覧を表示した時呼ばれる API
-// @Param             params body LikeRequest true "UserID"
+// @Param             params body GetLikeRequest true "UserID"
 // @Response          200  {object}  LikedGetResponse
 // @Router            /api/v1/like [get]
 func (c *LikeController) GetLikeHandler(ctx *gin.Context) {
-	var req LikeRequest
+	var req GetLikeRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
@@ -77,6 +77,12 @@ func (r *LikeRequest) toParams() *domain.Like {
 	}
 }
 
+// CreateLikeHandler GoDoc
+// @Summary           いいね API
+// @Description       ユーザーがいいねした時呼ばれる API
+// @Param             params body LikeRequest true "UserID, LikedUserID, MessageBody"
+// @Response          200
+// @Router            /api/v1/like [post]
 func (c *LikeController) CreateLikeHandler(ctx *gin.Context) {
 	var req LikeRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
