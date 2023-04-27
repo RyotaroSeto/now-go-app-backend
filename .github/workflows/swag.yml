@@ -7,6 +7,10 @@ on:
 
 jobs:
   swag:
+    permissions:
+      actions: write
+      checks: write
+      contents: write
     name: Run Swag and commit changes
     runs-on: ubuntu-latest
     steps:
