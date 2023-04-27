@@ -62,7 +62,6 @@ func (u *LikeRepository) GetLiked(ctx context.Context, uID domain.UserID) ([]*do
 	res := u.conn(ctx).Where(&q).Order("likes.liked_date desc").Find(&l)
 	if res.RowsAffected == 0 {
 		msg := "user_id: is not found"
-		log.Println(msg)
 		return nil, errors.New(msg)
 	}
 	if err := res.Error; err != nil {

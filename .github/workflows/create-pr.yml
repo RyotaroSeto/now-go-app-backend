@@ -6,6 +6,7 @@ on:
 env:
   BASE_BRANCH: main
   REVIEWER: RyotaroSeto
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   create_pr:
@@ -22,5 +23,5 @@ jobs:
           echo "count=$(gh pr list -B ${{ env.BASE_BRANCH }} -H ${{ github.ref_name }} --json 'id' -q '.[] | length')" >> $GITHUB_OUTPUT
 
       - name: Create PR
-        if: ${{ steps.check_pr.outputs.count == '' }}
+        if: ${{ steps.check_pr.outputs.count == 0 }}
         run: gh pr create --fill -B ${{ env.BASE_BRANCH }} -r ${{ env.REVIEWER }}
