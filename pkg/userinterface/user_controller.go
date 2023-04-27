@@ -48,6 +48,12 @@ func UserProfileResponse(u *domain.User) UserResponse {
 	}
 }
 
+// GetProfileHandler GoDoc
+// @Summary           ユーザープロフィール情報参照 API
+// @Description       指定ユーザーのプロフィール確認時呼ばれる API
+// @Param             params body UserRequest true "ID"
+// @Response          200  {object}  UserResponse
+// @Router            /api/v1/users [get]
 func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 	var req UserRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -110,6 +116,12 @@ func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 	}
 }
 
+// UpdateProfileHandler GoDoc
+// @Summary           ユーザープロフィール情報更新 API
+// @Description       自身のプロフィール情報更新時呼ばれる API
+// @Param             params body UserRequest true "ID, DateOfBirth, Gender, Residence, Occupation, Height, Weight"
+// @Response          200  {object}  UserUpdateResponse
+// @Router            /api/v1/users [put]
 func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	var req UserUpdateRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {

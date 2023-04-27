@@ -8,6 +8,10 @@ import (
 	"now-go-kon/pkg/util"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	swaggerfiles "github.com/swaggo/files"
+	_ "github.com/swaggo/swag/example/celler/docs"
 )
 
 func main() {
@@ -22,6 +26,7 @@ func main() {
 	pkg.RegisterHandlers(r)
 
 	r.GET("/healthCheck", pkg.HealthCheckHandler)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	pkg.RegisterNotFoundHandler(r)
 	if err := r.Run(":8080"); err != nil {

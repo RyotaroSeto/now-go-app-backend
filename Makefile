@@ -11,5 +11,7 @@ wire:
 createdb:
 	docker exec -it nowdb createdb --username=postgres --owner=postgres nowdb
 
+swag:
+	swag init
 
-.PHONY: api db wire createdb
+.PHONY: api db wire createdb swag

@@ -1,381 +1,49 @@
-basePath: /api/v1
 definitions:
-  data.Device:
-    properties:
-      name:
-        type: string
-      timestamp:
-        type: integer
-    type: object
-  data.Error:
-    properties:
-      code:
-        type: string
-      reason:
-        type: string
-    type: object
-  data.Health:
-    properties:
-      health:
-        type: string
-      message:
-        type: string
-    type: object
-  data.Room:
-    properties:
-      devices:
-        items:
-          $ref: '#/definitions/data.Device'
-        type: array
-      id:
-        type: integer
-      name:
-        type: string
-    type: object
-  data.RoomConnectRequest:
-    properties:
-      name:
-        type: string
-      request:
-        type: string
-    type: object
-  data.RoomCreate:
+  userinterface.UserRequest:
     properties:
       id:
         type: integer
     type: object
-  data.RoomCreateRequest:
+  userinterface.UserResponse:
     properties:
-      name:
-        type: string
-    type: object
-  data.Status:
-    properties:
-      device:
-        type: string
-      hash:
-        type: string
-      mime:
-        type: string
-      name:
-        type: string
-      timestamp:
+      date_of_birth:
         type: integer
-      type:
+      email:
         type: string
+      gender:
+        type: string
+      height:
+        type: integer
+      id:
+        type: integer
+      occupation:
+        type: string
+      residence:
+        type: string
+      status:
+        type: integer
+      user_name:
+        type: string
+      weight:
+        type: integer
     type: object
 info:
-  contact:
-    name: GitHub
-    url: https://github.com/Team-Kamo/server
-  description: Server-side api of the Octane.
-  title: OctaneServer
-  version: v1
+  contact: {}
 paths:
-  /health:
+  /api/v1/users:
     get:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      description: get health status of the api server
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/data.Health'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Get health status
-      tags:
-      - health
-  /room:
-    post:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Create new room
+      description: 指定ユーザーのプロフィール確認時呼ばれる API
       parameters:
-      - description: Room create request
+      - description: ID
         in: body
-        name: RoomCreateRequest
+        name: params
         required: true
         schema:
-          $ref: '#/definitions/data.RoomCreateRequest'
+          $ref: '#/definitions/userinterface.UserRequest'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/data.RoomCreate'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Create room
-      tags:
-      - create
-  /room/{id}:
-    delete:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Delete room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Delete room
-      tags:
-      - room
-    get:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Get status of the room
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/data.Room'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Get room status
-      tags:
-      - room
-    post:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Connect or disconnect device to/from the room
-      parameters:
-      - description: Room connect request
-        in: body
-        name: RoomConnectRequest
-        required: true
-        schema:
-          $ref: '#/definitions/data.RoomConnectRequest'
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Connect or disconnect to/from the room
-      tags:
-      - room
-  /room/{id}/content:
-    delete:
-      description: Delete content to the room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Delete room content
-      tags:
-      - content
-    get:
-      description: Get content to the room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Get room content
-      tags:
-      - content
-    put:
-      description: Set content to the room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Set room content
-      tags:
-      - content
-  /room/{id}/status:
-    delete:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Delete content status of the room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Delete content status
-      tags:
-      - status
-    get:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Get content status of the room
-      parameters:
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/data.Status'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Get content status
-      tags:
-      - status
-    put:
-      consumes:
-      - application/json
-      - text/xml
-      - application/x-www-form-urlencoded
-      - multipart/form-data
-      description: Set content status of the room
-      parameters:
-      - description: Room status
-        in: body
-        name: Status
-        required: true
-        schema:
-          $ref: '#/definitions/data.Status'
-      - description: Room ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/data.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/data.Error'
-      summary: Set content status
-      tags:
-      - status
-securityDefinitions:
-  X-Octane-API-Token:
-    in: header
-    name: X-Octane-API-Token
-    type: apiKey
+            $ref: '#/definitions/userinterface.UserResponse'
+      summary: ユーザープロフィール情報参照 API
 swagger: "2.0"

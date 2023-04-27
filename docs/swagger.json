@@ -1,0 +1,78 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/users": {
+            "get": {
+                "description": "指定ユーザーのプロフィール確認時呼ばれる API",
+                "summary": "ユーザープロフィール情報参照 API",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.UserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.UserResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "userinterface.UserRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userinterface.UserResponse": {
+            "type": "object",
+            "properties": {
+                "date_of_birth": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "occupation": {
+                    "type": "string"
+                },
+                "residence": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
