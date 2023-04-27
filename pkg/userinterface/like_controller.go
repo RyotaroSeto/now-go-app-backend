@@ -111,6 +111,12 @@ func (r *ApprovalRequest) toParams() *domain.Like {
 	}
 }
 
+// ApprovalHandler GoDoc
+// @Summary           ユーザー承認 API
+// @Description       ユーザーがいいね一覧からユーザーを選び承認時呼ばれる API
+// @Param             params body ApprovalRequest true "UserID, LikedUserID"
+// @Response          200
+// @Router            /api/v1/like/approval [post]
 func (c *LikeController) ApprovalHandler(ctx *gin.Context) {
 	var req ApprovalRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
