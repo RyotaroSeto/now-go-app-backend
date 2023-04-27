@@ -27,6 +27,12 @@ jobs:
           cd ../../
           swag init
         working-directory: ./
+      - name: Generate Html
+        run: |
+          npm install -g bootprint
+          npm install -g bootprint-openapi
+          cd ./docs
+          bootprint openapi swagger.json .
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
