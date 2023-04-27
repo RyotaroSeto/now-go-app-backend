@@ -4,6 +4,54 @@
         "contact": {}
     },
     "paths": {
+        "/api/v1/like": {
+            "get": {
+                "description": "自身にいいねをしたユーザー一覧を表示した時呼ばれる API",
+                "summary": "いいね一覧参照 API",
+                "parameters": [
+                    {
+                        "description": "UserID",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.GetLikeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userinterface.GetLikedResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "ユーザーがいいねした時呼ばれる API",
+                "summary": "いいね API",
+                "parameters": [
+                    {
+                        "description": "UserID, LikedUserID, MessageBody",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.LikeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/v1/users": {
             "get": {
                 "description": "指定ユーザーのプロフィール確認時呼ばれる API",
@@ -27,10 +75,95 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "description": "自身のプロフィール情報更新時呼ばれる API",
+                "summary": "ユーザープロフィール情報更新 API",
+                "parameters": [
+                    {
+                        "description": "ID, DateOfBirth, Gender, Residence, Occupation, Height, Weight",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.UserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.UserDetailResponse"
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "userinterface.GetLikeRequest": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userinterface.GetLikedResponse": {
+            "type": "object",
+            "properties": {
+                "liked_date": {
+                    "type": "string"
+                },
+                "liked_user_id": {
+                    "type": "integer"
+                },
+                "message_body": {
+                    "type": "string"
+                }
+            }
+        },
+        "userinterface.LikeRequest": {
+            "type": "object",
+            "properties": {
+                "liked_user_id": {
+                    "type": "integer"
+                },
+                "message_body": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userinterface.UserDetailResponse": {
+            "type": "object",
+            "properties": {
+                "date_of_birth": {
+                    "type": "integer"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "occupation": {
+                    "type": "string"
+                },
+                "residence": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "weight": {
+                    "type": "integer"
+                }
+            }
+        },
         "userinterface.UserRequest": {
             "type": "object",
             "properties": {

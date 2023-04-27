@@ -120,7 +120,7 @@ func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 // @Summary           ユーザープロフィール情報更新 API
 // @Description       自身のプロフィール情報更新時呼ばれる API
 // @Param             params body UserRequest true "ID, DateOfBirth, Gender, Residence, Occupation, Height, Weight"
-// @Response          200  {object}  UserUpdateResponse
+// @Response          200  {object}  UserDetailResponse
 // @Router            /api/v1/users [put]
 func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	var req UserUpdateRequest
