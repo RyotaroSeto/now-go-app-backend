@@ -64,6 +64,28 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/like/approval": {
+            "post": {
+                "description": "ユーザーがいいね一覧からユーザーを選び承認時呼ばれる API",
+                "summary": "ユーザー承認 API",
+                "parameters": [
+                    {
+                        "description": "UserID, LikedUserID",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.ApprovalRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/v1/users": {
             "get": {
                 "description": "指定ユーザーのプロフィール確認時呼ばれる API",
@@ -114,6 +136,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "userinterface.ApprovalRequest": {
+            "type": "object",
+            "properties": {
+                "liked_user_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "userinterface.GetLikeRequest": {
             "type": "object",
             "properties": {
