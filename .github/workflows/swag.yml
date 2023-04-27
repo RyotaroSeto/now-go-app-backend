@@ -22,10 +22,10 @@ jobs:
           go-version: "1.20.3"
       - name: Install Swag
         run: go install github.com/swaggo/swag/cmd/swag@latest
-      - name: Root Dir
-        run: cd ../../
       - name: Run Swag
-        run: swag init
+        run: |
+          cd ../../
+          swag init
         working-directory: ./
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
