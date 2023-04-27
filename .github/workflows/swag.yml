@@ -26,7 +26,6 @@ jobs:
         run: |
           cd ../../
           swag init
-        working-directory: ./
       - name: Generate Html
         run: |
           npm install -g bootprint
