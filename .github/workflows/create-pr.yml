@@ -1,0 +1,28 @@
+name: create PR by github-actions[bot]
+on:
+  push:
+    branches-ignore:
+      - "main"
+env:
+  BASE_BRANCH: main
+  REVIEWER: RyotaroSeto
+
+jobs:
+  create_pr:
+    if: ${{ !github.event.created }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: check PR
+        id: check_pr
+        run: |
+          echo "count=$(gh pr list -B ${{ env.BASE_BRANCH }} -H ${{ github.ref_name }} --json 'id' -q '.[] | length')" >> $GITHUB_OUTPUT
+
+      - name: Create PR
+        if: ${{ steps.check_pr.outputs.count == '' }}
+        run: gh pr create --fill -B ${{ env.BASE_BRANCH }} -r ${{ env.REVIEWER }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
