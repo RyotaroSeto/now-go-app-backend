@@ -39,12 +39,6 @@ func LikedGetResponse(us []*domain.Like) []GetLikedResponse {
 	return lr
 }
 
-// GetLikeHandler GoDoc
-// @Summary           いいね一覧参照 API
-// @Description       自身にいいねをしたユーザー一覧を表示した時呼ばれる API
-// @Param             params body GetLikeRequest true "UserID"
-// @Response          200  {object}  []GetLikedResponse
-// @Router            /api/v1/like [get]
 func (c *LikeController) GetLikeHandler(ctx *gin.Context) {
 	var req GetLikeRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
