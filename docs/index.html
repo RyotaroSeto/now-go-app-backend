@@ -52,18 +52,6 @@
                         </td>
                     </tr>
                     <tr>
-                            <td class="swagger--summary-path" rowspan="1">
-                                <a href="#path--api-v1-like-approval">/api/v1/like/approval</a>
-                            </td>
-                        <td>
-                            <a href="#operation--api-v1-like-approval-post">POST</a>
-                        </td>
-                        <td>
-                            <p>ユーザー承認 API</p>
-        
-                        </td>
-                    </tr>
-                    <tr>
                             <td class="swagger--summary-path" rowspan="2">
                                 <a href="#path--api-v1-users">/api/v1/users</a>
                             </td>
@@ -181,60 +169,6 @@
                             <div  class="panel panel-definition">
                                 <div class="panel-body">
                                             <a class="json-schema-ref" href="#/definitions/userinterface.LikeRequest">userinterface.LikeRequest</a>
-                                </div>
-                            </div></div>
-                                        </div>
-                            </section>        
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>OK</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                            </div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                </div>
-            </div>
-        
-        <span id="path--api-v1-like-approval"></span>
-            <div id="operation--api-v1-like-approval-post" class="swagger--panel-operation-post panel">
-                <div class="panel-heading">
-                    <div class="operation-summary">&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x627F;&#x8A8D; API</div>
-                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/api/v1/like/approval</strong></h3>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>ユーザーがいいね一覧からユーザーを選び承認時呼ばれる API</p>
-            
-                    </section>
-            
-                        
-                            <section class="sw-request-body">
-                                
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p><p>UserID, LikedUserID</p>
-                        </p>
-                                            </div>
-                                            <div class="col-md-6 sw-request-model">
-                            <div  class="panel panel-definition">
-                                <div class="panel-body">
-                                            <a class="json-schema-ref" href="#/definitions/userinterface.ApprovalRequest">userinterface.ApprovalRequest</a>
                                 </div>
                             </div></div>
                                         </div>
@@ -385,50 +319,6 @@
         <h2>Schema definitions</h2>
     
             
-                <div id="definition-userinterface.ApprovalRequest" class="panel panel-definition">
-                        <div class="panel-heading">
-                                <h3 class="panel-title"><a name="/definitions/userinterface.ApprovalRequest"></a>userinterface.ApprovalRequest:
-                                    <span class="json-property-type">
-                <span class="json-property-type">object</span>
-                <span class="json-property-range" title="Value limits"></span>
-                
-                </span>
-                                </h3>
-                        </div>
-                    <div class="panel-body">
-                            
-                                    <section class="json-schema-properties">
-                                        <dl>
-                                                <dt data-property-name="liked_user_id">
-                                                    <span class="json-property-name">liked_user_id:</span>
-                                                    
-                                                    <span class="json-property-type">integer</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                    </div>
-                                                </dd>
-                                                <dt data-property-name="user_id">
-                                                    <span class="json-property-name">user_id:</span>
-                                                    
-                                                    <span class="json-property-type">integer</span>
-                                                    <span class="json-property-range" title="Value limits"></span>
-                                                    
-                                                </dt>
-                                                <dd>
-                                                    
-                                                    <div class="json-inner-schema">
-                                                        
-                                                    </div>
-                                                </dd>
-                                        </dl>
-                                    </section>
-                    </div>
-                </div>        
                 <div id="definition-userinterface.GetLikedResponse" class="panel panel-definition">
                         <div class="panel-heading">
                                 <h3 class="panel-title"><a name="/definitions/userinterface.GetLikedResponse"></a>userinterface.GetLikedResponse:

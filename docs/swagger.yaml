@@ -1,11 +1,4 @@
 definitions:
-  userinterface.ApprovalRequest:
-    properties:
-      liked_user_id:
-        type: integer
-      user_id:
-        type: integer
-    type: object
   userinterface.GetLikeRequest:
     properties:
       user_id:
@@ -108,20 +101,6 @@ paths:
         "200":
           description: OK
       summary: いいね API
-  /api/v1/like/approval:
-    post:
-      description: ユーザーがいいね一覧からユーザーを選び承認時呼ばれる API
-      parameters:
-      - description: UserID, LikedUserID
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/userinterface.ApprovalRequest'
-      responses:
-        "200":
-          description: OK
-      summary: ユーザー承認 API
   /api/v1/users:
     get:
       description: 指定ユーザーのプロフィール確認時呼ばれる API
