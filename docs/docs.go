@@ -16,6 +16,34 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/board": {
+            "get": {
+                "description": "掲示板を表示した時に呼ばれる API",
+                "summary": "掲示板一覧参照 API",
+                "parameters": [
+                    {
+                        "description": "Gender",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.BoardGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userinterface.GetBoardResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/like": {
             "get": {
                 "description": "自身にいいねをしたユーザー一覧を表示した時呼ばれる API",
@@ -141,6 +169,31 @@ const docTemplate = `{
             "properties": {
                 "liked_user_id": {
                     "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "userinterface.BoardGetRequest": {
+            "type": "object",
+            "properties": {
+                "gender": {
+                    "type": "string"
+                }
+            }
+        },
+        "userinterface.GetBoardResponse": {
+            "type": "object",
+            "properties": {
+                "board_id": {
+                    "type": "integer"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "created_date": {
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "integer"

@@ -6,6 +6,22 @@ definitions:
       user_id:
         type: integer
     type: object
+  userinterface.BoardGetRequest:
+    properties:
+      gender:
+        type: string
+    type: object
+  userinterface.GetBoardResponse:
+    properties:
+      board_id:
+        type: integer
+      body:
+        type: string
+      created_date:
+        type: string
+      user_id:
+        type: integer
+    type: object
   userinterface.GetLikeRequest:
     properties:
       user_id:
@@ -77,6 +93,24 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/v1/board:
+    get:
+      description: 掲示板を表示した時に呼ばれる API
+      parameters:
+      - description: Gender
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/userinterface.BoardGetRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/userinterface.GetBoardResponse'
+            type: array
+      summary: 掲示板一覧参照 API
   /api/v1/like:
     get:
       description: 自身にいいねをしたユーザー一覧を表示した時呼ばれる API
