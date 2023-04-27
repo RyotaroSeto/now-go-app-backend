@@ -10,3 +10,6 @@ wire:
 
 createdb:
 	docker exec -it nowdb createdb --username=postgres --owner=postgres nowdb
+
+
+.PHONY: api db wire createdb
