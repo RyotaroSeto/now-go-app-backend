@@ -10,7 +10,6 @@ env:
 
 jobs:
   create_pr:
-    # if: ${{ !github.event.created }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
