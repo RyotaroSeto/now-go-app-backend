@@ -34,5 +34,15 @@ services:
       - "8080:8080"
     depends_on:
       - nowdb
+      - nats-streaming
     volumes:
       - ./:/app:delegated
+
+  nats-streaming:
+    image: nats-streaming
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./stan:/data
+    command: "-m 8222 --store file --dir /data/stan"
