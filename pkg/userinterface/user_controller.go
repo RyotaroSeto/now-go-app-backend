@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lib/pq"
 )
 
 type UserController struct {
@@ -65,17 +66,17 @@ func (c *UserController) CreateUserHandler(ctx *gin.Context) {
 		Email:          domain.Email(req.Email),
 	}
 	user, err := c.service.CreateUser(ctx, uParam)
-	// if err != nil {
-	// 	if pqErr, ok := err.(*pq.Error); ok {
-	// 		switch pqErr.Code.Name() {
-	// 		case "unique_violation":
-	// 			ctx.JSON(http.StatusForbidden, errorResponse(err))
-	// 			return
-	// 		}
-	// 	}
-	// 	ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-	// 	return
-	// }
+	if err != nil {
+		if pqErr, ok := err.(*pq.Error); ok {
+			switch pqErr.Code.Name() {
+			case "unique_violation":
+				ctx.JSON(http.StatusForbidden, domain.NewErrResponse(http.StatusForbidden))
+				return
+			}
+		}
+		ctx.JSON(http.StatusInternalServerError, domain.NewErrResponse(http.StatusInternalServerError))
+		return
+	}
 
 	res := newUserResponse(user)
 	ctx.JSON(http.StatusOK, res)
