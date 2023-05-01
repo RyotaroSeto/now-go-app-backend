@@ -67,6 +67,10 @@ func (u *UserRepository) conn(ctx context.Context) *gorm.DB {
 	return u.db.Session(&gorm.Session{})
 }
 
+func (u *UserRepository) UserCreate(ctx context.Context, uParam *domain.User) (*domain.User, error) {
+	return nil, nil
+}
+
 func (u *UserRepository) GetProfile(ctx context.Context, uID domain.UserID) (*domain.User, error) {
 	us := Users{}
 	q := Users{ID: uID.Num()}

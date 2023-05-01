@@ -7,6 +7,7 @@ type AuthRepository interface {
 }
 
 type UserRepository interface {
+	UserCreate(context.Context, *User) (*User, error)
 	GetProfile(context.Context, UserID) (*User, error)
 	UpdateProfile(context.Context, *UsersDetails) (*UsersDetails, error)
 }

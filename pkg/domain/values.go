@@ -3,11 +3,12 @@ package domain
 import "time"
 
 type User struct {
-	ID           UserID
-	UserName     UserName
-	Status       Status
-	Email        Email
-	UsersDetails UsersDetails
+	ID             UserID
+	UserName       UserName
+	HashedPassword HashedPassword
+	Status         Status
+	Email          Email
+	UsersDetails   UsersDetails
 }
 
 func NewUser(uID UserID, un UserName, s Status, e Email) *User {
@@ -29,6 +30,12 @@ type UserName string
 
 func (u UserName) String() string {
 	return string(u)
+}
+
+type HashedPassword string
+
+func (h HashedPassword) String() string {
+	return string(h)
 }
 
 type Status int

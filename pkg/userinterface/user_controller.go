@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"now-go-kon/pkg/application"
 	"now-go-kon/pkg/domain"
+	"now-go-kon/pkg/util"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +16,69 @@ type UserController struct {
 
 func NewUserController(service application.UserService) *UserController {
 	return &UserController{service: service}
+}
+
+type CreateUserRequest struct {
+	Username string `json:"user_name" binding:"required,alphanum"`
+	Password string `json:"password" binding:"required,min=6"`
+	Email    string `json:"email" binding:"required,email"`
+}
+
+type UserCreateResponse struct {
+	Username          string    `json:"username"`
+	Email             string    `json:"email"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
+}
+
+func newUserResponse(user *domain.User) UserCreateResponse {
+	return UserCreateResponse{
+		Username: user.UserName.String(),
+		Email:    user.Email.String(),
+		// PasswordChangedAt: user.PasswordChangedAt.String(),
+		// CreatedAt:         user.CreatedAt.String(),
+	}
+}
+
+// CreateUserHandler GoDoc
+// @Summary           ユーザー作成 API
+// @Description       ユーザー作成時呼ばれる API
+// @Param             params body CreateUserRequest true "Username, Password, Email"
+// @Response          200  {object}  UserCreateResponse
+// @Router            /api/v1/users [post]
+func (c *UserController) CreateUserHandler(ctx *gin.Context) {
+	var req CreateUserRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	hashedPassword, err := util.HashPassword(req.Password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, domain.NewErrResponse(http.StatusInternalServerError))
+		return
+	}
+
+	uParam := &domain.User{
+		UserName:       domain.UserName(req.Username),
+		HashedPassword: domain.HashedPassword(hashedPassword),
+		Email:          domain.Email(req.Email),
+	}
+	user, err := c.service.CreateUser(ctx, uParam)
+	// if err != nil {
+	// 	if pqErr, ok := err.(*pq.Error); ok {
+	// 		switch pqErr.Code.Name() {
+	// 		case "unique_violation":
+	// 			ctx.JSON(http.StatusForbidden, errorResponse(err))
+	// 			return
+	// 		}
+	// 	}
+	// 	ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+	// 	return
+	// }
+
+	res := newUserResponse(user)
+	ctx.JSON(http.StatusOK, res)
 }
 
 type UserRequest struct {
