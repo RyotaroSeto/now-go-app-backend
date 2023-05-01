@@ -160,6 +160,29 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "ユーザー作成時呼ばれる API",
+                "summary": "ユーザー作成 API",
+                "parameters": [
+                    {
+                        "description": "Username, Password, Email",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.UserCreateResponse"
+                        }
+                    }
+                }
             }
         }
     },
@@ -179,6 +202,26 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "gender": {
+                    "type": "string"
+                }
+            }
+        },
+        "userinterface.CreateUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "user_name"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6
+                },
+                "user_name": {
                     "type": "string"
                 }
             }
@@ -233,6 +276,23 @@ const docTemplate = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "userinterface.UserCreateResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password_changed_at": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },

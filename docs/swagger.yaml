@@ -11,6 +11,20 @@ definitions:
       gender:
         type: string
     type: object
+  userinterface.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      user_name:
+        type: string
+    required:
+    - email
+    - password
+    - user_name
+    type: object
   userinterface.GetBoardResponse:
     properties:
       board_id:
@@ -44,6 +58,17 @@ definitions:
         type: string
       user_id:
         type: integer
+    type: object
+  userinterface.UserCreateResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      password_changed_at:
+        type: string
+      username:
+        type: string
     type: object
   userinterface.UserDetailResponse:
     properties:
@@ -172,6 +197,21 @@ paths:
           schema:
             $ref: '#/definitions/userinterface.UserResponse'
       summary: ユーザープロフィール情報参照 API
+    post:
+      description: ユーザー作成時呼ばれる API
+      parameters:
+      - description: Username, Password, Email
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/userinterface.CreateUserRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userinterface.UserCreateResponse'
+      summary: ユーザー作成 API
     put:
       description: 自身のプロフィール情報更新時呼ばれる API
       parameters:

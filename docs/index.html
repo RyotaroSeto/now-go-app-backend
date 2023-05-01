@@ -76,7 +76,7 @@
                         </td>
                     </tr>
                     <tr>
-                            <td class="swagger--summary-path" rowspan="2">
+                            <td class="swagger--summary-path" rowspan="3">
                                 <a href="#path--api-v1-users">/api/v1/users</a>
                             </td>
                         <td>
@@ -84,6 +84,15 @@
                         </td>
                         <td>
                             <p>ユーザープロフィール情報参照 API</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--api-v1-users-post">POST</a>
+                        </td>
+                        <td>
+                            <p>ユーザー作成 API</p>
         
                         </td>
                     </tr>
@@ -401,6 +410,62 @@
                         </section>
                 </div>
             </div>
+            <div id="operation--api-v1-users-post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x4F5C;&#x6210; API</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/api/v1/users</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>ユーザー作成時呼ばれる API</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Username, Password, Email</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                            <a class="json-schema-ref" href="#/definitions/userinterface.CreateUserRequest">userinterface.CreateUserRequest</a>
+                                </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>OK</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/userinterface.UserCreateResponse">userinterface.UserCreateResponse</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
             <div id="operation--api-v1-users-put" class="swagger--panel-operation-put panel">
                 <div class="panel-heading">
                     <div class="operation-summary">&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x30D7;&#x30ED;&#x30D5;&#x30A3;&#x30FC;&#x30EB;&#x60C5;&#x5831;&#x66F4;&#x65B0; API</div>
@@ -528,6 +593,69 @@
                                                     <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                        </dl>
+                                    </section>
+                    </div>
+                </div>        
+                <div id="definition-userinterface.CreateUserRequest" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/userinterface.CreateUserRequest"></a>userinterface.CreateUserRequest:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                    <section class="json-schema-properties">
+                                        <dl>
+                                                <dt data-property-name="email">
+                                                    <span class="json-property-name">email:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                        <span class="json-property-required"></span>
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="password">
+                                                    <span class="json-property-name">password:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                        <span class="json-property-range" title="String length limits">
+                                                                (at least 6 chars)
+                                                        </span>
+                                                        <span class="json-property-required"></span>
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="user_name">
+                                                    <span class="json-property-name">user_name:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                        <span class="json-property-required"></span>
                                                 </dt>
                                                 <dd>
                                                     
@@ -741,6 +869,76 @@
                                                     <span class="json-property-name">user_id:</span>
                                                     
                                                     <span class="json-property-type">integer</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                        </dl>
+                                    </section>
+                    </div>
+                </div>        
+                <div id="definition-userinterface.UserCreateResponse" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/userinterface.UserCreateResponse"></a>userinterface.UserCreateResponse:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                    <section class="json-schema-properties">
+                                        <dl>
+                                                <dt data-property-name="created_at">
+                                                    <span class="json-property-name">created_at:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="email">
+                                                    <span class="json-property-name">email:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="password_changed_at">
+                                                    <span class="json-property-name">password_changed_at:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="username">
+                                                    <span class="json-property-name">username:</span>
+                                                    
+                                                    <span class="json-property-type">string</span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>
