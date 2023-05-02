@@ -5,11 +5,12 @@ import (
 )
 
 type Config struct {
-	DBHost     string `mapstructure:"DB_HOST"`
-	DBUser     string `mapstructure:"DB_USER"`
-	DBPassword string `mapstructure:"DB_PASSWORD"`
-	DBName     string `mapstructure:"DB_NAME"`
-	DBPort     string `mapstructure:"DB_PORT"`
+	DBHost            string `mapstructure:"DB_HOST"`
+	DBUser            string `mapstructure:"DB_USER"`
+	DBPassword        string `mapstructure:"DB_PASSWORD"`
+	DBName            string `mapstructure:"DB_NAME"`
+	DBPort            string `mapstructure:"DB_PORT"`
+	TokenSymmetricKey string `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 }
 
 func LoadConfig(path string) (config Config, err error) {

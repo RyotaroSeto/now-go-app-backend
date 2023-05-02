@@ -23,7 +23,7 @@ func main() {
 	setupRDB(config)
 	r := gin.Default()
 
-	pkg.RegisterHandlers(r)
+	pkg.RegisterHandlers(r, config)
 
 	r.GET("/healthCheck", pkg.HealthCheckHandler)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

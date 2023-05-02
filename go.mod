@@ -3,8 +3,11 @@ module now-go-kon
 go 1.20
 
 require (
+	github.com/aead/chacha20poly1305 v0.0.0-20201124145622-1a5aba2a8b29
 	github.com/gin-gonic/gin v1.9.0
+	github.com/google/uuid v1.1.2
 	github.com/lib/pq v1.10.9
+	github.com/o1egl/paseto v1.0.0
 	github.com/stretchr/testify v1.8.2
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
@@ -14,6 +17,8 @@ require (
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
+	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
+	github.com/aead/poly1305 v0.0.0-20180717145839-3fee0db0b635 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
@@ -30,6 +35,7 @@ require (
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.5.0 // indirect

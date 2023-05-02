@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"now-go-kon/pkg/injection"
+	"now-go-kon/pkg/token"
+	"now-go-kon/pkg/util"
 )
 
 type Health struct {
@@ -23,72 +25,79 @@ func HealthCheckHandler(c *gin.Context) {
 	c.JSON(200, health)
 }
 
-func RegisterHandlers(e *gin.Engine) {
+func RegisterHandlers(e *gin.Engine, config util.Config) {
 	root := e.Group("/api/v1")
 
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	if err != nil {
+		log.Fatal("cannot create token maker: %w", err)
+	}
+
 	{
-		RegisterAuthenticationHandlers(root)
-		RegisterUserHandlers(root)
-		RegisterBoardHandlers(root)
-		RegisterLikeHandlers(root)
+		RegisterAuthenticationHandlers(root, tokenMaker)
+		RegisterUserHandlers(root, tokenMaker)
+		RegisterBoardHandlers(root, tokenMaker)
+		RegisterLikeHandlers(root, tokenMaker)
 	}
 }
 
-func RegisterUserHandlers(root *gin.RouterGroup) {
+func RegisterUserHandlers(root *gin.RouterGroup, token token.Maker) {
 	user := injection.InitializeUserController()
 
+	authRoutes := root.Group("/users").Use(authMiddleware(token))
 	users := root.Group("/users")
 	{
 		users.POST("/", user.CreateUserHandler)
-		users.GET("/", user.GetProfileHandler)
-		users.PUT("/", user.UpdateProfileHandler)
+		authRoutes.GET("/", user.GetProfileHandler)
+		authRoutes.PUT("/", user.UpdateProfileHandler)
 	}
 }
 
-func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
+func RegisterAuthenticationHandlers(root *gin.RouterGroup, token token.Maker) {
 	auth := injection.InitializeAuthController()
 
+	authRoutes := root.Group("/session").Use(authMiddleware(token))
 	session := root.Group("/session")
 	{
 		session.POST("/login", auth.LoginHandler)
-		session.GET("/", auth.GetSessionHandler)
-		session.DELETE("/", auth.LogoutHandler)
-		session.POST("/", auth.PasswordAuthHandler)
+		authRoutes.GET("/", auth.GetSessionHandler)
+		authRoutes.DELETE("/", auth.LogoutHandler)
+		authRoutes.POST("/", auth.PasswordAuthHandler)
 	}
 }
 
-func RegisterBoardHandlers(root *gin.RouterGroup) {
+func RegisterBoardHandlers(root *gin.RouterGroup, token token.Maker) {
 	board := injection.InitializeBoardController()
 
-	session := root.Group("/board")
+	authRoutes := root.Group("/board").Use(authMiddleware(token))
 	{
-		session.GET("/", board.GetBoardHandler)
-		session.GET("/scroll", board.GetBoardScrollHandler)
-		session.POST("/", board.CreateBoardHandler)
-		session.DELETE("/", board.DeleteBoardHandler)
+		authRoutes.GET("/", board.GetBoardHandler)
+		authRoutes.GET("/scroll", board.GetBoardScrollHandler)
+		authRoutes.POST("/", board.CreateBoardHandler)
+		authRoutes.DELETE("/", board.DeleteBoardHandler)
 	}
 }
 
-func RegisterLikeHandlers(root *gin.RouterGroup) {
+func RegisterLikeHandlers(root *gin.RouterGroup, token token.Maker) {
 	like := injection.InitializeLikeController()
 
-	session := root.Group("/like")
+	authRoutes := root.Group("/like").Use(authMiddleware(token))
 	{
-		session.GET("/", like.GetLikeHandler)
-		session.POST("/", like.CreateLikeHandler)
-		session.POST("/approval", like.ApprovalHandler)
+		authRoutes.GET("/", like.GetLikeHandler)
+		authRoutes.POST("/", like.CreateLikeHandler)
+		authRoutes.POST("/approval", like.ApprovalHandler)
 
 	}
 }
 
-func RegisterMessageHandlers(root *gin.RouterGroup) {
+func RegisterMessageHandlers(root *gin.RouterGroup, token token.Maker) {
 	message := injection.InitializeMessageController()
 
-	session := root.Group("/message")
+	authRoutes := root.Group("/message").Use(authMiddleware(token))
 	{
-		session.GET("/", message.GetMessageHandler)
-		session.GET("/scroll", message.GetMessageScrollHandler)
-		session.POST("/", message.CreateMessageHandler)
+		authRoutes.GET("/", message.GetMessageHandler)
+		authRoutes.GET("/scroll", message.GetMessageScrollHandler)
+		authRoutes.POST("/", message.CreateMessageHandler)
 	}
 }
 
