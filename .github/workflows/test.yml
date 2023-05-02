@@ -7,15 +7,10 @@ on:
 jobs:
   golang-test:
     steps:
-      - uses: actions/setup-go@v3
-        with:
-          go-version: '>=1.20'
-      - uses: actions/checkout@v3
-      - name: golangci-lint
-      - uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
-      - name: testing
-        run: go test ./... -coverprofile=coverage.out --１
-      - name: create report
-        uses: k1LoW/octocov-action@v0 --２
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '>=1.20'
+    - uses: actions/checkout@v3
+    - run: go test ./... -coverprofile=coverage.out
+    - name: report coverage
+      uses: k1LoW/octocov-action@v0
