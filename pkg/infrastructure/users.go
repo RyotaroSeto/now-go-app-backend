@@ -91,7 +91,6 @@ func (u *UserRepository) GetProfile(ctx context.Context, uID domain.UserID) (*do
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			msg := fmt.Sprintf("UserID: %d is not found", uID.Num())
 			return nil, errors.New(msg)
-
 		}
 		return nil, err
 	}

@@ -95,7 +95,6 @@ func (u *BoardRepository) GetScrollBoard(ctx context.Context, gender domain.Gend
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			msg := fmt.Sprintf("BoardID: %d is not found", boardID.Num())
 			return nil, errors.New(msg)
-
 		}
 		return nil, err
 	}

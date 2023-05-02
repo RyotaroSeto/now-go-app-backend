@@ -2,7 +2,6 @@ package application
 
 import (
 	"context"
-	"fmt"
 	"now-go-kon/pkg/domain"
 )
 
@@ -21,13 +20,13 @@ func NewAuthService(repo domain.AuthRepository, tx Transaction) AuthService {
 var _ AuthService = new(authService)
 
 func (s *authService) Auth(ctx context.Context, uID domain.UserID, password domain.Password) error {
-	err := s.tx.Transaction(ctx, func(ctx context.Context) error {
-		return s.repo.PasswordAuth(ctx, uID, password)
-	})
+	// err := s.tx.Transaction(ctx, func(ctx context.Context) error {
+	// 	return s.repo.PasswordAuth(ctx, uID, password)
+	// })
 
-	if err != nil {
-		return fmt.Errorf("error: %v", err)
-	}
+	// if err != nil {
+	// 	return fmt.Errorf("error: %v", err)
+	// }
 
 	return nil
 }
