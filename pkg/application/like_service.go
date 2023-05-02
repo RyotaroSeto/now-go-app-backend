@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"now-go-kon/pkg/domain"
 )
@@ -29,10 +30,10 @@ func (s *likeService) LikeCreate(ctx context.Context, uParam *domain.Like) (err 
 		return nil
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("error: %v", err)
 	}
 
-	return err
+	return nil
 }
 
 func (s *likeService) LikeGet(ctx context.Context, uID domain.UserID) (likes []*domain.Like, err error) {
@@ -46,10 +47,10 @@ func (s *likeService) LikeGet(ctx context.Context, uID domain.UserID) (likes []*
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return likes, err
+	return likes, nil
 }
 
 func (s *likeService) Approval(ctx context.Context, uParam *domain.Like) (err error) {
@@ -61,8 +62,8 @@ func (s *likeService) Approval(ctx context.Context, uParam *domain.Like) (err er
 		return nil
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("error: %v", err)
 	}
 
-	return err
+	return nil
 }

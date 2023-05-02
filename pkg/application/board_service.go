@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"now-go-kon/pkg/domain"
 )
@@ -31,10 +32,10 @@ func (s *boardService) BoardGet(ctx context.Context, gender domain.Gender) (boar
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return boards, err
+	return boards, nil
 }
 
 func (s *boardService) ScrollBoardGet(ctx context.Context, gender domain.Gender, boardID domain.BoardID) (boards []*domain.Board, err error) {
@@ -48,10 +49,10 @@ func (s *boardService) ScrollBoardGet(ctx context.Context, gender domain.Gender,
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return boards, err
+	return boards, nil
 }
 
 func (s *boardService) BoardCreate(ctx context.Context, uParam *domain.Board) (board *domain.Board, err error) {
@@ -65,10 +66,10 @@ func (s *boardService) BoardCreate(ctx context.Context, uParam *domain.Board) (b
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return board, err
+	return board, nil
 }
 
 func (s *boardService) BoardDelete(ctx context.Context, bID domain.BoardID) (err error) {
@@ -81,8 +82,8 @@ func (s *boardService) BoardDelete(ctx context.Context, bID domain.BoardID) (err
 		return nil
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("error: %v", err)
 	}
 
-	return err
+	return nil
 }

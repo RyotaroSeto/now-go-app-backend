@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"now-go-kon/pkg/domain"
 )
 
@@ -24,5 +25,9 @@ func (s *authService) Auth(ctx context.Context, uID domain.UserID, password doma
 		return s.repo.PasswordAuth(ctx, uID, password)
 	})
 
-	return err
+	if err != nil {
+		return fmt.Errorf("error: %v", err)
+	}
+
+	return nil
 }

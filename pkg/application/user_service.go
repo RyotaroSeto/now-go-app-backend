@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"now-go-kon/pkg/domain"
 )
@@ -31,10 +32,10 @@ func (s *userService) CreateUser(ctx context.Context, uParam *domain.User) (user
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return user, err
+	return user, nil
 }
 
 func (s *userService) User(ctx context.Context, uID domain.UserID) (user *domain.User, err error) {
@@ -48,10 +49,10 @@ func (s *userService) User(ctx context.Context, uID domain.UserID) (user *domain
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return user, err
+	return user, nil
 }
 
 func (s *userService) UserUpdate(ctx context.Context, uParam *domain.UsersDetails) (user *domain.UsersDetails, err error) {
@@ -65,8 +66,8 @@ func (s *userService) UserUpdate(ctx context.Context, uParam *domain.UsersDetail
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error: %v", err)
 	}
 
-	return user, err
+	return user, nil
 }
