@@ -6,6 +6,7 @@ on:
   pull_request:
 jobs:
   golang-test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-go@v3
       with:
