@@ -70,6 +70,12 @@ type ScrollRequest struct {
 	BoardID int    `form:"board_id"`
 }
 
+// GetBoardScrollHandler GoDoc
+// @Summary           掲示板スクロール参照 API
+// @Description       掲示板を表示時20件以上前の情報参照時呼ばれる API
+// @Param             params body ScrollRequest true "Gender, BoardID"
+// @Response          200  {object}  []GetBoardResponse
+// @Router            /api/v1/board/scroll [get]
 func (c *BoardController) GetBoardScrollHandler(ctx *gin.Context) {
 	var req ScrollRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
