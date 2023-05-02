@@ -14,4 +14,7 @@ createdb:
 swag:
 	swag init
 
-.PHONY: api db wire createdb swag
+lint:
+	golangci-lint run
+
+.PHONY: api db wire createdb swag lint
