@@ -8,6 +8,8 @@ type User struct {
 	HashedPassword HashedPassword
 	Status         Status
 	Email          Email
+	CreateDate     time.Time
+	UpdatedDate    time.Time
 	UsersDetails   UsersDetails
 }
 

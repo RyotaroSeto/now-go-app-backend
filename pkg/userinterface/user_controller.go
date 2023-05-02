@@ -1,6 +1,7 @@
 package userinterface
 
 import (
+	"log"
 	"net/http"
 	"now-go-kon/pkg/application"
 	"now-go-kon/pkg/domain"
@@ -26,18 +27,18 @@ type CreateUserRequest struct {
 }
 
 type UserCreateResponse struct {
-	Username          string    `json:"username"`
-	Email             string    `json:"email"`
-	PasswordChangedAt time.Time `json:"password_changed_at"`
-	CreatedAt         time.Time `json:"created_at"`
+	Username    string    `json:"username"`
+	Email       string    `json:"email"`
+	CreatedDate time.Time `json:"created_at"`
+	UpdatedDate time.Time `json:"password_changed_at"`
 }
 
 func newUserResponse(user *domain.User) UserCreateResponse {
 	return UserCreateResponse{
-		Username: user.UserName.String(),
-		Email:    user.Email.String(),
-		// PasswordChangedAt: user.PasswordChangedAt.String(),
-		// CreatedAt:         user.CreatedAt.String(),
+		Username:    user.UserName.String(),
+		Email:       user.Email.String(),
+		CreatedDate: user.CreateDate,
+		UpdatedDate: user.UpdatedDate,
 	}
 }
 
@@ -49,13 +50,15 @@ func newUserResponse(user *domain.User) UserCreateResponse {
 // @Router            /api/v1/users [post]
 func (c *UserController) CreateUserHandler(ctx *gin.Context) {
 	var req CreateUserRequest
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		log.Println(err)
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}
 
 	hashedPassword, err := util.HashPassword(req.Password)
 	if err != nil {
+		log.Println(err)
 		ctx.JSON(http.StatusInternalServerError, domain.NewErrResponse(http.StatusInternalServerError))
 		return
 	}
