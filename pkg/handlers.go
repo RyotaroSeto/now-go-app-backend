@@ -50,9 +50,10 @@ func RegisterAuthenticationHandlers(root *gin.RouterGroup) {
 
 	session := root.Group("/session")
 	{
-		// session.GET("/", auth.GetSessionHandler)    //セッション確認API。GET /api/v1/session/
-		session.POST("/", auth.PasswordAuthHandler) //パスワード認証API。POST /api/v1/session/
-		// session.DELETE("/", auth.LogoutHandler)     //ログアウトAPI。DELETE /api/v1/session/
+		session.POST("/login", auth.LoginHandler)
+		session.GET("/", auth.GetSessionHandler)
+		session.DELETE("/", auth.LogoutHandler)
+		session.POST("/", auth.PasswordAuthHandler)
 	}
 }
 
