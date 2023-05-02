@@ -35,7 +35,7 @@ type LoginResponse struct {
 // @Summary           ログイン API
 // @Description       ユーザーがログイン時呼ばれる API
 // @Param             params body CreateUserRequest true "Username, Password"
-// @Response          200  {object}  LoginUserResponse
+// @Response          200  {object}  LoginResponse
 // @Router            /api/v1/users/login [post]
 func (c *AuthController) LoginHandler(ctx *gin.Context) {
 	// var req LoginRequest
@@ -61,7 +61,7 @@ func (c *AuthController) LoginHandler(ctx *gin.Context) {
 // @Summary           セッション確認API API
 // @Description       セッション確認時呼ばれる API
 // @Param             params body CreateUserRequest true ""
-// @Response          200  {object}  LoginUserResponse
+// @Response          200  {object}  LoginResponse
 // @Router            /api/v1/users/login [post]
 func (c *AuthController) GetSessionHandler(ctx *gin.Context) {
 
@@ -71,7 +71,7 @@ func (c *AuthController) GetSessionHandler(ctx *gin.Context) {
 // @Summary           ログアウト API
 // @Description       ユーザーがログアウト時呼ばれる API
 // @Param             params body CreateUserRequest true ""
-// @Response          200  {object}  LoginUserResponse
+// @Response          200  {object}  LoginResponse
 // @Router            /api/v1/users/login [post]
 func (c *AuthController) LogoutHandler(ctx *gin.Context) {
 
@@ -86,7 +86,7 @@ type AuthRequest struct {
 // @Summary           パスワード認証 API
 // @Description       ユーザーがログイン時呼ばれる API
 // @Param             params body CreateUserRequest true "Username, Password"
-// @Response          200  {object}  LoginUserResponse
+// @Response          200  {object}  LoginResponse
 // @Router            /api/v1/users/login [post]
 func (c *AuthController) PasswordAuthHandler(ctx *gin.Context) {
 	var req AuthRequest
