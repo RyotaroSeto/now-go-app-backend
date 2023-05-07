@@ -34,7 +34,7 @@ func RegisterHandlers(e *gin.Engine, config util.Config) {
 	}
 
 	{
-		RegisterAuthenticationHandlers(root, tokenMaker)
+		RegisterAuthenticationHandlers(root, tokenMaker, config)
 		RegisterUserHandlers(root, tokenMaker)
 		RegisterBoardHandlers(root, tokenMaker)
 		RegisterLikeHandlers(root, tokenMaker)
@@ -53,13 +53,15 @@ func RegisterUserHandlers(root *gin.RouterGroup, token token.Maker) {
 	}
 }
 
-func RegisterAuthenticationHandlers(root *gin.RouterGroup, token token.Maker) {
+func RegisterAuthenticationHandlers(root *gin.RouterGroup, token token.Maker, config util.Config) {
 	auth := injection.InitializeAuthController()
 
 	authRoutes := root.Group("/session").Use(authMiddleware(token))
 	session := root.Group("/session")
 	{
-		session.POST("/login", auth.LoginHandler)
+		session.POST("/login", func(ctx *gin.Context) {
+			auth.LoginHandler(ctx, token, config)
+		})
 		authRoutes.GET("/", auth.GetSessionHandler)
 		authRoutes.DELETE("/", auth.LogoutHandler)
 		authRoutes.POST("/", auth.PasswordAuthHandler)

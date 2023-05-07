@@ -4,6 +4,8 @@ import "context"
 
 type AuthRepository interface {
 	PasswordAuth(context.Context, UserID, Password) error
+	UserGet(context.Context, Email) (*User, error)
+	SessionCreate(context.Context, *Session) (*Session, error)
 }
 
 type UserRepository interface {
