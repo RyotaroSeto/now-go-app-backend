@@ -27,6 +27,7 @@ type CreateUserRequest struct {
 }
 
 type UserCreateResponse struct {
+	ID          int       `json:"id"`
 	Username    string    `json:"username"`
 	Email       string    `json:"email"`
 	CreatedDate time.Time `json:"created_at"`
@@ -35,6 +36,7 @@ type UserCreateResponse struct {
 
 func newUserResponse(user *domain.User) UserCreateResponse {
 	return UserCreateResponse{
+		ID:          user.ID.Num(),
 		Username:    user.UserName.String(),
 		Email:       user.Email.String(),
 		CreatedDate: user.CreateDate,
