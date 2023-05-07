@@ -44,6 +44,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/board/scroll": {
+            "get": {
+                "description": "掲示板を表示時20件以上前の情報参照時呼ばれる API",
+                "summary": "掲示板スクロール参照 API",
+                "parameters": [
+                    {
+                        "description": "Gender, BoardID",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.ScrollRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userinterface.GetBoardResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/like": {
             "get": {
                 "description": "自身にいいねをしたユーザー一覧を表示した時呼ばれる API",
@@ -184,6 +212,24 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/users/login": {
+            "post": {
+                "description": "ユーザーがログイン時呼ばれる API",
+                "summary": "パスワード認証 API",
+                "parameters": [
+                    {
+                        "description": "Username, Password",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
@@ -279,6 +325,17 @@ const docTemplate = `{
                 }
             }
         },
+        "userinterface.ScrollRequest": {
+            "type": "object",
+            "properties": {
+                "board_id": {
+                    "type": "integer"
+                },
+                "gender": {
+                    "type": "string"
+                }
+            }
+        },
         "userinterface.UserCreateResponse": {
             "type": "object",
             "properties": {
@@ -287,6 +344,9 @@ const docTemplate = `{
                 },
                 "email": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "password_changed_at": {
                     "type": "string"
@@ -362,6 +422,29 @@ const docTemplate = `{
                 },
                 "weight": {
                     "type": "integer"
+                }
+            }
+        },
+        "userinterface.loginUserResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "access_token_expires_at": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "refresh_token_expires_at": {
+                    "type": "string"
+                },
+                "session_id": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/userinterface.UserCreateResponse"
                 }
             }
         }
