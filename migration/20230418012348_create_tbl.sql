@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 
 CREATE TABLE IF NOT EXISTS "sessions" (
-    "id" SERIAL PRIMARY KEY,
+    "id" UUID PRIMARY KEY,
     "user_name" VARCHAR(255) UNIQUE NOT NULL,
     "refresh_token" VARCHAR NOT NULL,
     "user_agent" VARCHAR NOT NULL,
