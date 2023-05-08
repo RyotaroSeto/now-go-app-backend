@@ -14,7 +14,7 @@ type AuthService interface {
 type UserService interface {
 	CreateUser(context.Context, *domain.User) (*domain.User, error)
 	User(context.Context, domain.UserID) (*domain.User, error)
-	UserUpdate(context.Context, *domain.UsersDetails) (*domain.UsersDetails, error)
+	UserUpsert(context.Context, *domain.UsersDetails) (*domain.UsersDetails, error)
 }
 
 type BoardService interface {

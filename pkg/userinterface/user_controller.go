@@ -211,7 +211,7 @@ func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	}
 
 	uParam := req.toParams()
-	updateUser, err := c.service.UserUpdate(ctx, uParam)
+	updateUser, err := c.service.UserUpsert(ctx, uParam)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return

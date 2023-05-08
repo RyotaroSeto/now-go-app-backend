@@ -76,7 +76,7 @@ func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
 }
 
 // TODO:Upsertにする
-func (u *UserRepository) UpdateProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
+func (u *UserRepository) UpsertProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
 	var ud UsersDetails
 	ud.fromEntity(uParam)
 
