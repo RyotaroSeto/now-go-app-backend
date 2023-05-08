@@ -134,7 +134,7 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 }
 
 type UserUpdateRequest struct {
-	ID           int    `json:"id"`
+	UserID       int    `json:"user_id"`
 	Name         string `json:"name"`
 	Age          int    `json:"age"`
 	Gender       string `json:"gender"`
@@ -182,7 +182,7 @@ func UserUpdateResponse(u *domain.UsersDetails) UserDetailResponse {
 
 func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 	return &domain.UsersDetails{
-		UserID:       domain.UserID(r.ID),
+		UserID:       domain.UserID(r.UserID),
 		Name:         r.Name,
 		Age:          r.Age,
 		Gender:       r.Gender,

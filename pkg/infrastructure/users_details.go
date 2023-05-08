@@ -75,13 +75,13 @@ func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
 	u.Introduction = e.Introduction
 }
 
-// TODO:Upsertにする
 func (u *UserRepository) UpsertProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
-	var ud UsersDetails
-	ud.fromEntity(uParam)
+	var param, ud UsersDetails
+	param.fromEntity(uParam)
 
 	q := UsersDetails{UserID: uParam.UserID.Num()}
-	if err := u.conn(ctx).Where(&q).Save(&ud).Error; err != nil {
+	res := u.conn(ctx).Where(&q).Assign(&param).FirstOrCreate(&ud)
+	if err := res.Error; err != nil {
 		log.Println(err)
 		return nil, errors.New(err.Error())
 	}
