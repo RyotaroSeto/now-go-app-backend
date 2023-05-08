@@ -28,11 +28,11 @@ type LoginRequest struct {
 
 func toParams(refreshPayload *token.Payload, username string, refreshToken string, ctx *gin.Context) *domain.Session {
 	return &domain.Session{
-		SessionID:    domain.SessionID(refreshPayload.ID),
-		UserName:     domain.UserName(username),
-		RefreshToken: domain.RefreshToken(refreshToken),
-		UserAgent:    domain.UserAgent(ctx.Request.UserAgent()),
-		ClientIP:     domain.ClientIP(ctx.ClientIP()),
+		SessionID:    refreshPayload.ID.String(),
+		UserName:     username,
+		RefreshToken: refreshToken,
+		UserAgent:    ctx.Request.UserAgent(),
+		ClientIP:     ctx.ClientIP(),
 		IsBlocked:    false,
 		ExpiresDate:  refreshPayload.ExpiredAt,
 	}
@@ -107,11 +107,9 @@ func (c *AuthController) LoginHandler(ctx *gin.Context, tokenMaker token.Maker, 
 		ctx.JSON(http.StatusInternalServerError, domain.NewErrResponse(http.StatusInternalServerError))
 		return
 	}
-	log.Println(111111111)
-	log.Println(session)
 
 	rsp := loginUserResponse{
-		// SessionID:             session.ID,
+		SessionID:             session.SessionID,
 		AccessToken:           accessToken,
 		AccessTokenExpiresAt:  accessPayload.ExpiredAt,
 		RefreshToken:          refreshToken,

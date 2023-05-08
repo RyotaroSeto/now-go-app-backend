@@ -2,22 +2,33 @@ package domain
 
 import (
 	"time"
-
-	"github.com/gofrs/uuid"
 )
 
 type Session struct {
-	SessionID    SessionID
-	UserName     UserName
-	RefreshToken RefreshToken
-	UserAgent    UserAgent
-	ClientIP     ClientIP
-	IsBlocked    IsBlocked
+	SessionID    string
+	UserName     string
+	RefreshToken string
+	UserAgent    string
+	ClientIP     string
+	IsBlocked    bool
 	ExpiresDate  time.Time
 	CreateDate   time.Time
 }
 
-type SessionID uuid.UUID
+type SessionID string
+
+func (s SessionID) String() string {
+	return string(s)
+}
+
+// func NewSessionID() (SessionID, error) {
+// 	u, err := uuid.NewRandom()
+// 	if err != nil {
+// 		return "", InheritError(InternalServerError, err)
+// 	}
+
+// 	return SessionID(u.String()), nil
+// }
 
 type RefreshToken string
 
@@ -36,5 +47,3 @@ type ClientIP string
 func (c ClientIP) String() string {
 	return string(c)
 }
-
-type IsBlocked bool
