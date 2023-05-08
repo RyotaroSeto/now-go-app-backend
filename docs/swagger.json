@@ -347,26 +347,41 @@
         "userinterface.UserDetailResponse": {
             "type": "object",
             "properties": {
-                "date_of_birth": {
+                "age": {
                     "type": "integer"
                 },
                 "gender": {
                     "type": "string"
                 },
+                "graduation": {
+                    "type": "string"
+                },
                 "height": {
                     "type": "integer"
                 },
-                "occupation": {
+                "hobby": {
                     "type": "string"
                 },
-                "residence": {
+                "introduction": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "passion": {
+                    "type": "string"
+                },
+                "tweet": {
                     "type": "string"
                 },
                 "user_id": {
                     "type": "integer"
                 },
-                "weight": {
-                    "type": "integer"
+                "work": {
+                    "type": "string"
                 }
             }
         },
@@ -381,35 +396,20 @@
         "userinterface.UserResponse": {
             "type": "object",
             "properties": {
-                "date_of_birth": {
-                    "type": "integer"
-                },
                 "email": {
                     "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "height": {
-                    "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "occupation": {
-                    "type": "string"
-                },
-                "residence": {
-                    "type": "string"
-                },
                 "status": {
                     "type": "integer"
                 },
+                "user_detail": {
+                    "$ref": "#/definitions/userinterface.UserDetailResponse"
+                },
                 "user_name": {
                     "type": "string"
-                },
-                "weight": {
-                    "type": "integer"
                 }
             }
         },
