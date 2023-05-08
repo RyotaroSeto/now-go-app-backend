@@ -53,16 +53,21 @@ func (e Email) String() string {
 }
 
 type UsersDetails struct {
-	ID          UserDetailID
-	UserID      UserID
-	DateOfBirth DateOfBirth
-	Gender      Gender
-	Residence   Residence
-	Occupation  Occupation
-	Height      Height
-	Weight      Weight
-	CreatedDate time.Time
-	UpdatedDate time.Time
+	ID           int
+	UserID       UserID
+	Name         string
+	Age          int
+	Gender       string
+	Height       int
+	Location     string
+	Work         string
+	Graduation   string
+	Hobby        string
+	Passion      string
+	Tweet        string
+	Introduction string
+	CreatedDate  time.Time
+	UpdatedDate  time.Time
 }
 
 type UserDetailID int

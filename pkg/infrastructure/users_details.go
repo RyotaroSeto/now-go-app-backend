@@ -9,26 +9,36 @@ import (
 )
 
 type UsersDetails struct {
-	UserID      int       `gorm:"column:user_id"`
-	DateOfBirth int       `gorm:"column:date_of_birth"`
-	Gender      string    `gorm:"column:gender"`
-	Residence   string    `gorm:"column:residence"`
-	Occupation  string    `gorm:"column:occupation"`
-	Height      int       `gorm:"column:height"`
-	Weight      int       `gorm:"column:weight"`
-	CreatedDate time.Time `gorm:"column:created_date;autoCreateTime"`
-	UpdatedDate time.Time `gorm:"column:updated_date;autoUpdateTime"`
+	UserID       int       `gorm:"column:user_id"`
+	Name         string    `gorm:"column:name"`
+	Age          int       `gorm:"column:age"`
+	Gender       string    `gorm:"column:gender"`
+	Height       int       `gorm:"column:height"`
+	Location     string    `gorm:"column:location"`
+	Work         string    `gorm:"column:work"`
+	Graduation   string    `gorm:"column:graduation"`
+	Hobby        string    `gorm:"column:hobby"`
+	Passion      string    `gorm:"column:passion"`
+	Tweet        string    `gorm:"column:tweet"`
+	Introduction string    `gorm:"column:introduction"`
+	CreatedDate  time.Time `gorm:"column:created_date;autoCreateTime"`
+	UpdatedDate  time.Time `gorm:"column:updated_date;autoUpdateTime"`
 }
 
 func (u *UsersDetails) toEntity() *domain.UsersDetails {
 	userDetai := &domain.UsersDetails{
-		UserID:      domain.UserID(u.UserID),
-		DateOfBirth: domain.DateOfBirth(u.DateOfBirth),
-		Gender:      domain.Gender(u.Gender),
-		Residence:   domain.Residence(u.Residence),
-		Occupation:  domain.Occupation(u.Occupation),
-		Height:      domain.Height(u.Height),
-		Weight:      domain.Weight(u.Weight),
+		UserID:       domain.UserID(u.UserID),
+		Name:         u.Name,
+		Age:          u.Age,
+		Gender:       u.Gender,
+		Height:       u.Height,
+		Location:     u.Location,
+		Work:         u.Work,
+		Graduation:   u.Graduation,
+		Hobby:        u.Hobby,
+		Passion:      u.Passion,
+		Tweet:        u.Tweet,
+		Introduction: u.Introduction,
 	}
 
 	return userDetai
@@ -37,24 +47,35 @@ func (u *UsersDetails) toEntity() *domain.UsersDetails {
 func (us *UsersDetails) bindEntity(e *domain.UsersDetails) {
 	u := us.toEntity()
 	e.UserID = u.UserID
-	e.DateOfBirth = u.DateOfBirth
+	e.Name = u.Name
+	e.Age = u.Age
 	e.Gender = u.Gender
-	e.Residence = u.Residence
-	e.Occupation = u.Occupation
 	e.Height = u.Height
-	e.Weight = u.Weight
+	e.Location = u.Location
+	e.Work = u.Work
+	e.Graduation = u.Graduation
+	e.Hobby = u.Hobby
+	e.Passion = u.Passion
+	e.Tweet = u.Tweet
+	e.Introduction = u.Introduction
 }
 
 func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
 	u.UserID = e.UserID.Num()
-	u.DateOfBirth = e.DateOfBirth.Num()
-	u.Gender = e.Gender.String()
-	u.Residence = e.Residence.String()
-	u.Occupation = e.Occupation.String()
-	u.Height = e.Height.Num()
-	u.Weight = e.Weight.Num()
+	u.Name = e.Name
+	u.Age = e.Age
+	u.Gender = e.Gender
+	u.Height = e.Height
+	u.Location = e.Location
+	u.Work = e.Work
+	u.Graduation = e.Graduation
+	u.Hobby = e.Hobby
+	u.Passion = e.Passion
+	u.Tweet = e.Tweet
+	u.Introduction = e.Introduction
 }
 
+// TODO:Upsertにする
 func (u *UserRepository) UpdateProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
 	var ud UsersDetails
 	ud.fromEntity(uParam)

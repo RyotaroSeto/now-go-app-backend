@@ -92,30 +92,20 @@ type UserRequest struct {
 }
 
 type UserResponse struct {
-	ID          int    `json:"id"`
-	Username    string `json:"user_name"`
-	Status      int    `json:"status"`
-	Email       string `json:"email"`
-	DateOfBirth int    `json:"date_of_birth"`
-	Gender      string `json:"gender"`
-	Residence   string `json:"residence"`
-	Occupation  string `json:"occupation"`
-	Height      int    `json:"height"`
-	Weight      int    `json:"weight"`
+	ID                 int                `json:"id"`
+	Username           string             `json:"user_name"`
+	Status             int                `json:"status"`
+	Email              string             `json:"email"`
+	UserDetailResponse UserDetailResponse `json:"user_detail"`
 }
 
 func UserProfileResponse(u *domain.User) UserResponse {
 	return UserResponse{
-		ID:          u.ID.Num(),
-		Username:    u.UserName.String(),
-		Status:      u.Status.Num(),
-		Email:       u.Email.String(),
-		DateOfBirth: u.UsersDetails.DateOfBirth.Num(),
-		Gender:      u.UsersDetails.Gender.String(),
-		Residence:   u.UsersDetails.Residence.String(),
-		Occupation:  u.UsersDetails.Occupation.String(),
-		Height:      u.UsersDetails.Height.Num(),
-		Weight:      u.UsersDetails.Weight.Num(),
+		ID:                 u.ID.Num(),
+		Username:           u.UserName.String(),
+		Status:             u.Status.Num(),
+		Email:              u.Email.String(),
+		UserDetailResponse: UserUpdateResponse(&u.UsersDetails),
 	}
 }
 
@@ -144,46 +134,66 @@ func (c *UserController) GetProfileHandler(ctx *gin.Context) {
 }
 
 type UserUpdateRequest struct {
-	ID          int    `json:"id"`
-	DateOfBirth int    `json:"date_of_birth"`
-	Gender      string `json:"gender"`
-	Residence   string `json:"residence"`
-	Occupation  string `json:"occupation"`
-	Height      int    `json:"height"`
-	Weight      int    `json:"weight"`
+	ID           int    `json:"id"`
+	Name         string `json:"name"`
+	Age          int    `json:"age"`
+	Gender       string `json:"gender"`
+	Height       int    `json:"height"`
+	Location     string `json:"location"`
+	Work         string `json:"work"`
+	Graduation   string `json:"graduation"`
+	Hobby        string `json:"hobby"`
+	Passion      string `json:"passion"`
+	Tweet        string `json:"tweet"`
+	Introduction string `json:"introduction"`
 }
 
 type UserDetailResponse struct {
-	UserID      int    `json:"user_id"`
-	DateOfBirth int    `json:"date_of_birth"`
-	Gender      string `json:"gender"`
-	Residence   string `json:"residence"`
-	Occupation  string `json:"occupation"`
-	Height      int    `json:"height"`
-	Weight      int    `json:"weight"`
+	UserID       int    `json:"user_id"`
+	Name         string `json:"name"`
+	Age          int    `json:"age"`
+	Gender       string `json:"gender"`
+	Height       int    `json:"height"`
+	Location     string `json:"location"`
+	Work         string `json:"work"`
+	Graduation   string `json:"graduation"`
+	Hobby        string `json:"hobby"`
+	Passion      string `json:"passion"`
+	Tweet        string `json:"tweet"`
+	Introduction string `json:"introduction"`
 }
 
 func UserUpdateResponse(u *domain.UsersDetails) UserDetailResponse {
 	return UserDetailResponse{
-		UserID:      u.UserID.Num(),
-		DateOfBirth: u.DateOfBirth.Num(),
-		Gender:      u.Gender.String(),
-		Residence:   u.Residence.String(),
-		Occupation:  u.Occupation.String(),
-		Height:      u.Height.Num(),
-		Weight:      u.Weight.Num(),
+		UserID:       u.UserID.Num(),
+		Name:         u.Name,
+		Age:          u.Age,
+		Gender:       u.Gender,
+		Height:       u.Height,
+		Location:     u.Location,
+		Work:         u.Work,
+		Graduation:   u.Graduation,
+		Hobby:        u.Hobby,
+		Passion:      u.Passion,
+		Tweet:        u.Tweet,
+		Introduction: u.Introduction,
 	}
 }
 
 func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 	return &domain.UsersDetails{
-		UserID:      domain.UserID(r.ID),
-		DateOfBirth: domain.DateOfBirth(r.DateOfBirth),
-		Gender:      domain.Gender(r.Gender),
-		Residence:   domain.Residence(r.Residence),
-		Occupation:  domain.Occupation(r.Occupation),
-		Height:      domain.Height(r.Height),
-		Weight:      domain.Weight(r.Weight),
+		UserID:       domain.UserID(r.ID),
+		Name:         r.Name,
+		Age:          r.Age,
+		Gender:       r.Gender,
+		Height:       r.Height,
+		Location:     r.Location,
+		Work:         r.Work,
+		Graduation:   r.Graduation,
+		Hobby:        r.Hobby,
+		Passion:      r.Passion,
+		Tweet:        r.Tweet,
+		Introduction: r.Introduction,
 	}
 }
 
