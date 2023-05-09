@@ -49,7 +49,7 @@ func RegisterUserHandlers(root *gin.RouterGroup, token token.Maker) {
 	{
 		users.POST("/", user.CreateUserHandler)
 		authRoutes.GET("/", user.GetProfileHandler)
-		authRoutes.PUT("/", user.UpdateProfileHandler)
+		authRoutes.POST("/upsert", user.UpdateProfileHandler)
 	}
 }
 

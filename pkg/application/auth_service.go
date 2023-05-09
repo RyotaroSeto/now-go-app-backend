@@ -40,6 +40,12 @@ func (s *authService) GetUser(ctx context.Context, email domain.Email) (user *do
 
 func (s *authService) CreateSession(ctx context.Context, sParam *domain.Session) (session *domain.Session, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		err := s.repo.SessionDelete(ctx, domain.UserName(sParam.UserName))
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+
 		l, err := s.repo.SessionCreate(ctx, sParam)
 		if err != nil {
 			log.Println(err)

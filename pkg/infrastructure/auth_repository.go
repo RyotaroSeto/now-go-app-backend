@@ -102,6 +102,15 @@ func (u *AuthRepository) SessionCreate(ctx context.Context, session *domain.Sess
 	return b.toEntity(), nil
 }
 
+func (u *AuthRepository) SessionDelete(ctx context.Context, userName domain.UserName) error {
+	var s Session
+	if err := u.conn(ctx).Where(&Session{UserName: userName.String()}).Delete(&s).Error; err != nil {
+		log.Println(err)
+		return errors.New(err.Error())
+	}
+	return nil
+}
+
 func (r *AuthRepository) PasswordAuth(ctx context.Context, uID domain.UserID, password domain.Password) error {
 	// パスワード認証の処理は割愛
 	return nil

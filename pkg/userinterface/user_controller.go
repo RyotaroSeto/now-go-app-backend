@@ -206,6 +206,7 @@ func (r *UserUpdateRequest) toParams() *domain.UsersDetails {
 func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	var req UserUpdateRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
+		log.Println(err)
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}
@@ -213,6 +214,7 @@ func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	uParam := req.toParams()
 	updateUser, err := c.service.UserUpsert(ctx, uParam)
 	if err != nil {
+		log.Println(err)
 		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
 		return
 	}

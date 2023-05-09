@@ -6,6 +6,7 @@ type AuthRepository interface {
 	PasswordAuth(context.Context, UserID, Password) error
 	UserGet(context.Context, Email) (*User, error)
 	SessionCreate(context.Context, *Session) (*Session, error)
+	SessionDelete(context.Context, UserName) error
 }
 
 type UserRepository interface {
