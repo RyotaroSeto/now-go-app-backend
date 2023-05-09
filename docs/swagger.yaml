@@ -273,12 +273,16 @@ paths:
     post:
       description: ユーザーがログイン時呼ばれる API
       parameters:
-      - description: Username, Password
+      - description: Email, Password
         in: body
         name: params
         required: true
         schema:
           $ref: '#/definitions/userinterface.CreateUserRequest'
-      responses: {}
-      summary: パスワード認証 API
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userinterface.loginUserResponse'
+      summary: ログイン API
 swagger: "2.0"

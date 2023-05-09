@@ -216,10 +216,10 @@ const docTemplate = `{
         "/api/v1/users/login": {
             "post": {
                 "description": "ユーザーがログイン時呼ばれる API",
-                "summary": "パスワード認証 API",
+                "summary": "ログイン API",
                 "parameters": [
                     {
-                        "description": "Username, Password",
+                        "description": "Email, Password",
                         "name": "params",
                         "in": "body",
                         "required": true,
@@ -228,7 +228,14 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.loginUserResponse"
+                        }
+                    }
+                }
             }
         }
     },

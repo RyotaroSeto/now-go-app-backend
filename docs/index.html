@@ -125,7 +125,7 @@
                             <a href="#operation--api-v1-users-login-post">POST</a>
                         </td>
                         <td>
-                            <p>パスワード認証 API</p>
+                            <p>ログイン API</p>
         
                         </td>
                     </tr>
@@ -617,7 +617,7 @@
         <span id="path--api-v1-users-login"></span>
             <div id="operation--api-v1-users-login-post" class="swagger--panel-operation-post panel">
                 <div class="panel-heading">
-                    <div class="operation-summary">&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x8A8D;&#x8A3C; API</div>
+                    <div class="operation-summary">&#x30ED;&#x30B0;&#x30A4;&#x30F3; API</div>
                     <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/api/v1/users/login</strong></h3>
                 </div>
                 <div class="panel-body">
@@ -631,7 +631,7 @@
                                 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <p><p>Username, Password</p>
+                                                <p><p>Email, Password</p>
                         </p>
                                             </div>
                                             <div class="col-md-6 sw-request-model">
@@ -646,6 +646,27 @@
                         <section class="sw-responses">
                     
                             <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>OK</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/userinterface.loginUserResponse">userinterface.loginUserResponse</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
                             </dl>
                         </section>
                 </div>
