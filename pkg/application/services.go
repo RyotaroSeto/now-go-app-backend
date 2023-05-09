@@ -6,7 +6,6 @@ import (
 )
 
 type AuthService interface {
-	Auth(context.Context, domain.UserID, domain.Password) error
 	GetUser(context.Context, domain.Email) (*domain.User, error)
 	CreateSession(context.Context, *domain.Session) (*domain.Session, error)
 }

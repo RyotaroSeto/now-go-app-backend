@@ -62,9 +62,7 @@ func RegisterAuthenticationHandlers(root *gin.RouterGroup, token token.Maker, co
 		session.POST("/login", func(ctx *gin.Context) {
 			auth.LoginHandler(ctx, token, config)
 		})
-		authRoutes.GET("/", auth.GetSessionHandler)
 		authRoutes.DELETE("/", auth.LogoutHandler)
-		authRoutes.POST("/", auth.PasswordAuthHandler)
 	}
 }
 

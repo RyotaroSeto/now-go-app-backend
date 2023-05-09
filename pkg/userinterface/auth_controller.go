@@ -120,34 +120,6 @@ func (c *AuthController) LoginHandler(ctx *gin.Context, tokenMaker token.Maker, 
 
 }
 
-func (c *AuthController) GetSessionHandler(ctx *gin.Context) {
-
-}
-
 func (c *AuthController) LogoutHandler(ctx *gin.Context) {
 
-}
-
-type AuthRequest struct {
-	ID       int    `json:"id"`
-	Password string `json:"password"`
-}
-
-// LoginHandler GoDoc
-// @Summary           パスワード認証 API
-// @Description       ユーザーがログイン時呼ばれる API
-// @Param             params body CreateUserRequest true "Username, Password"
-// @Router            /api/v1/users/login [post]
-func (c *AuthController) PasswordAuthHandler(ctx *gin.Context) {
-	var req AuthRequest
-	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.Status(http.StatusUnauthorized)
-		return
-	}
-
-	if err := c.service.Auth(ctx, domain.UserID(req.ID), domain.Password(req.Password)); err != nil {
-		ctx.Status(http.StatusUnauthorized)
-		return
-	}
-	ctx.Status(http.StatusOK)
 }
