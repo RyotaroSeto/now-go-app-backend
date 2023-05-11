@@ -222,3 +222,47 @@ func (c *UserController) UpdateProfileHandler(ctx *gin.Context) {
 	res := UserUpdateResponse(updateUser)
 	ctx.JSON(http.StatusOK, res)
 }
+
+type UserDetailListRequest struct {
+	Gender string `form:"gender"`
+}
+
+type UserDetailListResponse struct {
+	UserDetailResponse UserDetailResponse `json:"user_detail"`
+	Board              GetBoardResponse   `json:"board"`
+}
+
+func UserListResponse(us []*domain.UsersDetails) []UserDetailListResponse {
+	var ud []UserDetailListResponse
+	for _, v := range us {
+		ud = append(ud, UserDetailListResponse{
+			UserDetailResponse: UserUpdateResponse(v),
+			Board:              BoardsResponse(&v.Board),
+		})
+	}
+	return ud
+}
+
+// GetBoardHandler GoDoc
+// @Summary           掲示板一覧参照 API
+// @Description       掲示板を表示した時に呼ばれる API
+// @Param             params body BoardGetRequest true "Gender"
+// @Response          200  {object}  []UserDetailListResponse
+// @Router            /api/v1/users/list [get]
+func (c *UserController) GetUsersDetailHandler(ctx *gin.Context) {
+	var req UserDetailListRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	dGender := domain.Gender(req.Gender)
+	users, err := c.service.UserDetailsGet(ctx, dGender)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
+		return
+	}
+
+	res := UserListResponse(users)
+	ctx.JSON(http.StatusOK, res)
+}

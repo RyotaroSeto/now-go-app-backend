@@ -23,6 +23,7 @@ type UsersDetails struct {
 	Introduction string    `gorm:"column:introduction"`
 	CreatedDate  time.Time `gorm:"column:created_date;autoCreateTime"`
 	UpdatedDate  time.Time `gorm:"column:updated_date;autoUpdateTime"`
+	Board        Board     `gorm:"foreignKey:UserID;references:UserID"`
 }
 
 func (u *UsersDetails) toEntity() *domain.UsersDetails {
@@ -39,6 +40,7 @@ func (u *UsersDetails) toEntity() *domain.UsersDetails {
 		Passion:      u.Passion,
 		Tweet:        u.Tweet,
 		Introduction: u.Introduction,
+		Board:        *u.Board.toEntity(),
 	}
 
 	return userDetai
@@ -58,9 +60,12 @@ func (us *UsersDetails) bindEntity(e *domain.UsersDetails) {
 	e.Passion = u.Passion
 	e.Tweet = u.Tweet
 	e.Introduction = u.Introduction
+	e.Board = u.Board
 }
 
 func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
+	var ud Board
+	ud.fromEntity(&e.Board)
 	u.UserID = e.UserID.Num()
 	u.Name = e.Name
 	u.Age = e.Age
@@ -73,6 +78,7 @@ func (u *UsersDetails) fromEntity(e *domain.UsersDetails) {
 	u.Passion = e.Passion
 	u.Tweet = e.Tweet
 	u.Introduction = e.Introduction
+	u.Board = ud
 }
 
 func (u *UserRepository) UpsertProfile(ctx context.Context, uParam *domain.UsersDetails) (*domain.UsersDetails, error) {
@@ -87,4 +93,26 @@ func (u *UserRepository) UpsertProfile(ctx context.Context, uParam *domain.Users
 	}
 
 	return ud.toEntity(), nil
+}
+
+func (u *UserRepository) GetUserDetails(ctx context.Context, gender domain.Gender) ([]*domain.UsersDetails, error) {
+	ud := []UsersDetails{}
+
+	q := UsersDetails{Gender: gender.String()}
+	res := u.conn(ctx).Preload("Board").Where(&q).Limit(20).Find(&ud)
+	if res.RowsAffected == 0 {
+		msg := "board: is not found"
+		return nil, errors.New(msg)
+	}
+	if err := res.Error; err != nil {
+		log.Println(err)
+		return nil, errors.New(err.Error())
+	}
+
+	uds := []*domain.UsersDetails{}
+	for _, a := range ud {
+		uds = append(uds, a.toEntity())
+	}
+
+	return uds, nil
 }

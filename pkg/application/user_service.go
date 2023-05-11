@@ -71,3 +71,20 @@ func (s *userService) UserUpsert(ctx context.Context, uParam *domain.UsersDetail
 
 	return user, nil
 }
+
+func (s *userService) UserDetailsGet(ctx context.Context, gender domain.Gender) (users []*domain.UsersDetails, err error) {
+	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
+		ud, err := s.repo.GetUserDetails(ctx, gender)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		users = ud
+		return nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("error: %v", err)
+	}
+
+	return users, nil
+}

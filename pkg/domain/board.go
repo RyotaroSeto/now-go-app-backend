@@ -3,11 +3,11 @@ package domain
 import "time"
 
 type Board struct {
-	ID           BoardID
-	UserID       UserID
-	Body         Body
-	CreatedDate  time.Time
-	UsersDetails UsersDetails
+	ID          BoardID
+	UserID      UserID
+	Body        Body
+	CreatedDate time.Time
+	// UsersDetails UsersDetails
 }
 
 type BoardID int

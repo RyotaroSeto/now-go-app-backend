@@ -49,6 +49,7 @@ func RegisterUserHandlers(root *gin.RouterGroup, token token.Maker) {
 	{
 		users.POST("/", user.CreateUserHandler)
 		authRoutes.GET("/", user.GetProfileHandler)
+		authRoutes.GET("/list", user.GetUsersDetailHandler)
 		authRoutes.POST("/upsert", user.UpdateProfileHandler)
 	}
 }
@@ -71,7 +72,7 @@ func RegisterBoardHandlers(root *gin.RouterGroup, token token.Maker) {
 
 	authRoutes := root.Group("/board").Use(authMiddleware(token))
 	{
-		authRoutes.GET("/", board.GetBoardHandler)
+		// authRoutes.GET("/", board.GetBoardHandler)
 		authRoutes.GET("/scroll", board.GetBoardScrollHandler)
 		authRoutes.POST("/", board.CreateBoardHandler)
 		authRoutes.DELETE("/", board.DeleteBoardHandler)

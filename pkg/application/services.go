@@ -12,12 +12,12 @@ type AuthService interface {
 
 type UserService interface {
 	CreateUser(context.Context, *domain.User) (*domain.User, error)
+	UserDetailsGet(context.Context, domain.Gender) ([]*domain.UsersDetails, error)
 	User(context.Context, domain.UserID) (*domain.User, error)
 	UserUpsert(context.Context, *domain.UsersDetails) (*domain.UsersDetails, error)
 }
 
 type BoardService interface {
-	BoardGet(context.Context, domain.Gender) ([]*domain.Board, error)
 	ScrollBoardGet(context.Context, domain.Gender, domain.BoardID) ([]*domain.Board, error)
 	BoardCreate(context.Context, *domain.Board) (*domain.Board, error)
 	BoardDelete(context.Context, domain.BoardID) error

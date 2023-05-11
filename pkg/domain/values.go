@@ -68,6 +68,7 @@ type UsersDetails struct {
 	Introduction string
 	CreatedDate  time.Time
 	UpdatedDate  time.Time
+	Board        Board
 }
 
 type UserDetailID int

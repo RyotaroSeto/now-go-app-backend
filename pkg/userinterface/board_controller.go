@@ -28,6 +28,15 @@ type GetBoardResponse struct {
 	CreatedDate time.Time `json:"created_date"`
 }
 
+func BoardsResponse(us *domain.Board) GetBoardResponse {
+	return GetBoardResponse{
+		BoardID:     us.ID.Num(),
+		UserID:      us.UserID.Num(),
+		Body:        us.Body.String(),
+		CreatedDate: us.CreatedDate,
+	}
+}
+
 func BoardGetResponse(us []*domain.Board) []GetBoardResponse {
 	var br []GetBoardResponse
 	for _, v := range us {
@@ -39,30 +48,6 @@ func BoardGetResponse(us []*domain.Board) []GetBoardResponse {
 		})
 	}
 	return br
-}
-
-// GetBoardHandler GoDoc
-// @Summary           掲示板一覧参照 API
-// @Description       掲示板を表示した時に呼ばれる API
-// @Param             params body BoardGetRequest true "Gender"
-// @Response          200  {object}  []GetBoardResponse
-// @Router            /api/v1/board [get]
-func (c *BoardController) GetBoardHandler(ctx *gin.Context) {
-	var req BoardGetRequest
-	if err := ctx.ShouldBindQuery(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
-		return
-	}
-
-	dGender := domain.Gender(req.Gender)
-	boards, err := c.service.BoardGet(ctx, dGender)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, domain.NewErrResponse(http.StatusBadRequest))
-		return
-	}
-
-	res := BoardGetResponse(boards)
-	ctx.JSON(http.StatusOK, res)
 }
 
 type ScrollRequest struct {

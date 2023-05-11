@@ -11,12 +11,12 @@ type AuthRepository interface {
 
 type UserRepository interface {
 	UserCreate(context.Context, *User) (*User, error)
+	GetUserDetails(context.Context, Gender) ([]*UsersDetails, error)
 	GetProfile(context.Context, UserID) (*User, error)
 	UpsertProfile(context.Context, *UsersDetails) (*UsersDetails, error)
 }
 
 type BoardRepository interface {
-	GetBoard(context.Context, Gender) ([]*Board, error)
 	GetScrollBoard(context.Context, Gender, BoardID) ([]*Board, error)
 	CreateBoard(context.Context, *Board) (*Board, error)
 	DeleteBoard(context.Context, BoardID) error

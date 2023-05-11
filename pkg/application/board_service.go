@@ -21,23 +21,6 @@ func NewBoardService(repo domain.BoardRepository, tx Transaction) BoardService {
 
 var _ BoardService = new(boardService)
 
-func (s *boardService) BoardGet(ctx context.Context, gender domain.Gender) (boards []*domain.Board, err error) {
-	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
-		b, err := s.repo.GetBoard(ctx, gender)
-		if err != nil {
-			log.Println(err)
-			return err
-		}
-		boards = b
-		return nil
-	})
-	if err != nil {
-		return nil, fmt.Errorf("error: %v", err)
-	}
-
-	return boards, nil
-}
-
 func (s *boardService) ScrollBoardGet(ctx context.Context, gender domain.Gender, boardID domain.BoardID) (boards []*domain.Board, err error) {
 	err = s.tx.Transaction(ctx, func(ctx context.Context) error {
 		b, err := s.repo.GetScrollBoard(ctx, gender, boardID)
