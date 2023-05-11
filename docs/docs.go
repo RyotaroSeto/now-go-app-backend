@@ -16,34 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/board": {
-            "get": {
-                "description": "掲示板を表示した時に呼ばれる API",
-                "summary": "掲示板一覧参照 API",
-                "parameters": [
-                    {
-                        "description": "Gender",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/userinterface.BoardGetRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/userinterface.GetBoardResponse"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/board/scroll": {
             "get": {
                 "description": "掲示板を表示時20件以上前の情報参照時呼ばれる API",
@@ -213,6 +185,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/users/list": {
+            "get": {
+                "description": "掲示板を表示した時に呼ばれる API",
+                "summary": "掲示板一覧参照 API",
+                "parameters": [
+                    {
+                        "description": "Gender",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userinterface.BoardGetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/userinterface.UserDetailListResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/users/login": {
             "post": {
                 "description": "ユーザーがログイン時呼ばれる API",
@@ -360,6 +360,17 @@ const docTemplate = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "userinterface.UserDetailListResponse": {
+            "type": "object",
+            "properties": {
+                "board": {
+                    "$ref": "#/definitions/userinterface.GetBoardResponse"
+                },
+                "user_detail": {
+                    "$ref": "#/definitions/userinterface.UserDetailResponse"
                 }
             }
         },

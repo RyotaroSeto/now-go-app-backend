@@ -32,18 +32,6 @@
             <tbody>
                     <tr>
                             <td class="swagger--summary-path" rowspan="1">
-                                <a href="#path--api-v1-board">/api/v1/board</a>
-                            </td>
-                        <td>
-                            <a href="#operation--api-v1-board-get">GET</a>
-                        </td>
-                        <td>
-                            <p>掲示板一覧参照 API</p>
-        
-                        </td>
-                    </tr>
-                    <tr>
-                            <td class="swagger--summary-path" rowspan="1">
                                 <a href="#path--api-v1-board-scroll">/api/v1/board/scroll</a>
                             </td>
                         <td>
@@ -119,6 +107,18 @@
                     </tr>
                     <tr>
                             <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--api-v1-users-list">/api/v1/users/list</a>
+                            </td>
+                        <td>
+                            <a href="#operation--api-v1-users-list-get">GET</a>
+                        </td>
+                        <td>
+                            <p>掲示板一覧参照 API</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
                                 <a href="#path--api-v1-users-login">/api/v1/users/login</a>
                             </td>
                         <td>
@@ -136,73 +136,6 @@
     
     <h2>Paths</h2>
     
-        
-        <span id="path--api-v1-board"></span>
-            <div id="operation--api-v1-board-get" class="swagger--panel-operation-get panel">
-                <div class="panel-heading">
-                    <div class="operation-summary">&#x63B2;&#x793A;&#x677F;&#x4E00;&#x89A7;&#x53C2;&#x7167; API</div>
-                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/board</strong></h3>
-                </div>
-                <div class="panel-body">
-                    <section class="sw-operation-description">
-                        <p>掲示板を表示した時に呼ばれる API</p>
-            
-                    </section>
-            
-                        
-                            <section class="sw-request-body">
-                                
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p><p>Gender</p>
-                        </p>
-                                            </div>
-                                            <div class="col-md-6 sw-request-model">
-                            <div  class="panel panel-definition">
-                                <div class="panel-body">
-                                            <a class="json-schema-ref" href="#/definitions/userinterface.BoardGetRequest">userinterface.BoardGetRequest</a>
-                                </div>
-                            </div></div>
-                                        </div>
-                            </section>        
-                    
-                        <section class="sw-responses">
-                    
-                            <dl>
-                                    <dt class="sw-response-200">
-                                        200 OK
-                                    
-                                    </dt>
-                                    <dd class="sw-response-200">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p>OK</p>
-                                            
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6 sw-response-model">
-                                                <div  class="panel panel-definition">
-                                                    <div class="panel-body">
-                                                            
-                                                                            <section class="json-schema-array-items">
-                                                                                
-                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/userinterface.GetBoardResponse">userinterface.GetBoardResponse</a>
-                                                                                </span>
-                                                                                <span class="json-property-range" title="Value limits"></span>
-                                                                                
-                                                                                <div class="json-inner-schema">
-                                                                                    
-                                                                                </div>
-                                                                            </section>    </div>
-                                                </div></div>
-                                            
-                                            </div>                </dd>
-                            </dl>
-                        </section>
-                </div>
-            </div>
         
         <span id="path--api-v1-board-scroll"></span>
             <div id="operation--api-v1-board-scroll-get" class="swagger--panel-operation-get panel">
@@ -606,6 +539,73 @@
                                                     <div class="panel-body">
                                                                 <a class="json-schema-ref" href="#/definitions/userinterface.UserDetailResponse">userinterface.UserDetailResponse</a>
                                                     </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--api-v1-users-list"></span>
+            <div id="operation--api-v1-users-list-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">&#x63B2;&#x793A;&#x677F;&#x4E00;&#x89A7;&#x53C2;&#x7167; API</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/api/v1/users/list</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>掲示板を表示した時に呼ばれる API</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Gender</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                            <a class="json-schema-ref" href="#/definitions/userinterface.BoardGetRequest">userinterface.BoardGetRequest</a>
+                                </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>OK</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                            <section class="json-schema-array-items">
+                                                                                
+                                                                                <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/userinterface.UserDetailListResponse">userinterface.UserDetailListResponse</a>
+                                                                                </span>
+                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                
+                                                                                <div class="json-inner-schema">
+                                                                                    
+                                                                                </div>
+                                                                            </section>    </div>
                                                 </div></div>
                                             
                                             </div>                </dd>
@@ -1242,6 +1242,52 @@
                                                     <span class="json-property-name">username:</span>
                                                     
                                                     <span class="json-property-type">string</span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                        </dl>
+                                    </section>
+                    </div>
+                </div>        
+                <div id="definition-userinterface.UserDetailListResponse" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/userinterface.UserDetailListResponse"></a>userinterface.UserDetailListResponse:
+                                    <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                                    <section class="json-schema-properties">
+                                        <dl>
+                                                <dt data-property-name="board">
+                                                    <span class="json-property-name">board:</span>
+                                                    
+                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/userinterface.GetBoardResponse">userinterface.GetBoardResponse</a>
+                                                    </span>
+                                                    <span class="json-property-range" title="Value limits"></span>
+                                                    
+                                                </dt>
+                                                <dd>
+                                                    
+                                                    <div class="json-inner-schema">
+                                                        
+                                                    </div>
+                                                </dd>
+                                                <dt data-property-name="user_detail">
+                                                    <span class="json-property-name">user_detail:</span>
+                                                    
+                                                    <span class="json-property-type">    <a class="json-schema-ref" href="#/definitions/userinterface.UserDetailResponse">userinterface.UserDetailResponse</a>
+                                                    </span>
                                                     <span class="json-property-range" title="Value limits"></span>
                                                     
                                                 </dt>

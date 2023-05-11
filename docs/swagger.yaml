@@ -79,6 +79,13 @@ definitions:
       username:
         type: string
     type: object
+  userinterface.UserDetailListResponse:
+    properties:
+      board:
+        $ref: '#/definitions/userinterface.GetBoardResponse'
+      user_detail:
+        $ref: '#/definitions/userinterface.UserDetailResponse'
+    type: object
   userinterface.UserDetailResponse:
     properties:
       age:
@@ -142,24 +149,6 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/v1/board:
-    get:
-      description: 掲示板を表示した時に呼ばれる API
-      parameters:
-      - description: Gender
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/userinterface.BoardGetRequest'
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/userinterface.GetBoardResponse'
-            type: array
-      summary: 掲示板一覧参照 API
   /api/v1/board/scroll:
     get:
       description: 掲示板を表示時20件以上前の情報参照時呼ばれる API
@@ -269,6 +258,24 @@ paths:
           schema:
             $ref: '#/definitions/userinterface.UserDetailResponse'
       summary: ユーザープロフィール情報更新 API
+  /api/v1/users/list:
+    get:
+      description: 掲示板を表示した時に呼ばれる API
+      parameters:
+      - description: Gender
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/userinterface.BoardGetRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/userinterface.UserDetailListResponse'
+            type: array
+      summary: 掲示板一覧参照 API
   /api/v1/users/login:
     post:
       description: ユーザーがログイン時呼ばれる API
