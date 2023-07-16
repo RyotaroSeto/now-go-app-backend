@@ -18,7 +18,7 @@ jobs:
           output: dist
           spec-file: docs/swagger.yaml
       - name: Deploy to GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: dist
 
